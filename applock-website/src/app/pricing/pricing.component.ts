@@ -386,8 +386,4 @@ This popup blocking is exactly what MappLock prevents in kiosk environments!`);
     const current = parseInt(currentPrice.replace('$', ''));
     return Math.round(((original - current) / original) * 100);
   }
-
-  toggleFaq(index: number) {
-    this.faqs[index].open = !this.faqs[index].open;
-  }
 }
