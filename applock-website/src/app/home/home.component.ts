@@ -71,8 +71,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
   ];
 
-  constructor() {}
-
   ngOnInit() {
     // Set SEO tags for home page
     this.seoService.setHomePage();
