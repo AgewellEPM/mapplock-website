@@ -21,12 +21,10 @@ export class NavigationComponent implements OnInit {
   isMobileMenuOpen = false;
 
   navigationItems: NavigationItem[] = [
-    { label: 'Home', route: '/', icon: '🏠' },
-    { label: 'Features', route: '/features', icon: '⚡' },
-    { label: 'Pricing', route: '/pricing', icon: '💎' },
     { label: 'Education', route: '/education', icon: '🎓' },
     { label: 'Trade Shows', route: '/tradeshow', icon: '🏢' },
-    { label: 'Blog', route: '/blog', icon: '📝' }
+    { label: 'Features', route: '/features', icon: '⚡' },
+    { label: 'Pricing', route: '/pricing', icon: '💎' }
   ];
 
   constructor(private router: Router) {}
