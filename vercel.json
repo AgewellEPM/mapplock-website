@@ -1,7 +1,8 @@
 {
-  "buildCommand": "cd applock-website && npm run build",
-  "outputDirectory": "applock-website/dist/applock-website/browser",
-  "installCommand": "cd applock-website && npm install",
+  "root": "applock-website",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/applock-website/browser",
+  "installCommand": "npm install",
   "framework": "angular",
   "rewrites": [
     {
