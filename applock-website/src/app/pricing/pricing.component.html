@@ -1,0 +1,291 @@
+<!-- MappLock Pricing Page -->
+<div class="pricing-container">
+  <!-- Ghost Smoke Effects -->
+  <div class="smoke-container">
+    <div class="smoke smoke-1"></div>
+    <div class="smoke smoke-2"></div>
+    <div class="smoke smoke-3"></div>
+    <div class="smoke smoke-4"></div>
+    <div class="smoke smoke-5"></div>
+  </div>
+
+  <!-- Floating Particles -->
+  <div class="particles-container">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <!-- Glowing Orbs -->
+  <div class="orb-container">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="pricing-hero scroll-animate">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="hero-highlight">Simple Pricing.</span><br>
+          No Subscriptions.
+        </h1>
+        <p class="hero-subtitle">
+          One-time purchase with lifetime value. Choose the plan that fits your needs and unlock the full potential of professional kiosk mode for macOS.
+        </p>
+
+        <div class="hero-badges">
+          <div class="badge">✨ 14-Day Free Trial</div>
+          <div class="badge">🔒 No Credit Card Required</div>
+          <div class="badge">📧 Email Support Included</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Plans Section -->
+  <section class="pricing-section scroll-animate">
+    <div class="container">
+      <div class="pricing-grid">
+        <div class="pricing-card"
+             *ngFor="let plan of pricingPlans; let i = index"
+             [class.popular]="plan.popular">
+
+          <div class="popular-badge" *ngIf="plan.popular">
+            Most Popular
+          </div>
+
+          <div class="plan-header">
+            <h3 class="plan-name">{{ plan.name }}</h3>
+            <p class="plan-description">{{ plan.description }}</p>
+          </div>
+
+          <div class="plan-pricing">
+            <div class="price-wrapper">
+              <span class="price-main">{{ plan.price }}</span>
+              <span class="price-period">{{ plan.period }}</span>
+            </div>
+            <div class="price-original" *ngIf="plan.originalPrice">
+              <span class="original-price">{{ plan.originalPrice }}</span>
+              <span class="savings">Save {{ getSavings(plan.originalPrice, plan.price) }}%</span>
+            </div>
+          </div>
+
+          <div class="plan-features">
+            <ul class="features-list">
+              <li class="feature-item" *ngFor="let feature of plan.features">
+                <span class="feature-icon">✓</span>
+                <span class="feature-text">{{ feature }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="plan-actions">
+            <button class="plan-cta"
+                    [class]="plan.ctaClass"
+                    (click)="selectPlan(plan.name)">
+              {{ plan.cta }}
+            </button>
+            <button class="trial-btn" (click)="startFreeTrial()">
+              Try Free for 14 Days
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enterprise Section -->
+      <div class="enterprise-section scroll-animate">
+        <div class="enterprise-card">
+          <div class="enterprise-content">
+            <h3>Enterprise Solutions</h3>
+            <p>Need more than 20 licenses? Custom deployment? White-label solutions?</p>
+            <div class="enterprise-features">
+              <span class="enterprise-feature">🏢 Custom Licensing</span>
+              <span class="enterprise-feature">🔧 Dedicated Support</span>
+              <span class="enterprise-feature">⚙️ Custom Integrations</span>
+              <span class="enterprise-feature">📊 Advanced Analytics</span>
+            </div>
+          </div>
+          <div class="enterprise-actions">
+            <button class="btn-enterprise" (click)="contactSales()">
+              Contact Sales
+            </button>
+            <button class="btn-demo" (click)="scheduleDemo()">
+              Schedule Demo
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Table Section -->
+  <section class="comparison-section scroll-animate">
+    <div class="container">
+      <div class="section-header">
+        <h2>Feature Comparison</h2>
+        <p>See what's included in each plan</p>
+      </div>
+
+      <div class="comparison-table">
+        <div class="table-header">
+          <div class="feature-column">Features</div>
+          <div class="plan-column">Personal</div>
+          <div class="plan-column popular">Professional</div>
+          <div class="plan-column">Business</div>
+        </div>
+
+        <div class="table-body">
+          <div class="table-row">
+            <div class="feature-name">Mac Licenses</div>
+            <div class="feature-value">1</div>
+            <div class="feature-value">3</div>
+            <div class="feature-value">20</div>
+          </div>
+
+          <div class="table-row">
+            <div class="feature-name">App Locking</div>
+            <div class="feature-value">✓</div>
+            <div class="feature-value">✓</div>
+            <div class="feature-value">✓</div>
+          </div>
+
+          <div class="table-row">
+            <div class="feature-name">Kiosk Mode</div>
+            <div class="feature-value">✓</div>
+            <div class="feature-value">✓</div>
+            <div class="feature-value">✓</div>
+          </div>
+
+          <div class="table-row">
+            <div class="feature-name">Session Timers</div>
+            <div class="feature-value">✓</div>
+            <div class="feature-value">✓</div>
+            <div class="feature-value">✓</div>
+          </div>
+
+          <div class="table-row">
+            <div class="feature-name">Custom Branding</div>
+            <div class="feature-value">-</div>
+            <div class="feature-value">✓</div>
+            <div class="feature-value">✓</div>
+          </div>
+
+          <div class="table-row">
+            <div class="feature-name">Usage Analytics</div>
+            <div class="feature-value">Basic</div>
+            <div class="feature-value">Advanced</div>
+            <div class="feature-value">Enterprise</div>
+          </div>
+
+          <div class="table-row">
+            <div class="feature-name">Remote Management</div>
+            <div class="feature-value">-</div>
+            <div class="feature-value">✓</div>
+            <div class="feature-value">✓</div>
+          </div>
+
+          <div class="table-row">
+            <div class="feature-name">Volume Deployment</div>
+            <div class="feature-value">-</div>
+            <div class="feature-value">-</div>
+            <div class="feature-value">✓</div>
+          </div>
+
+          <div class="table-row">
+            <div class="feature-name">Support</div>
+            <div class="feature-value">Email</div>
+            <div class="feature-value">Priority Email</div>
+            <div class="feature-value">Phone + Email</div>
+          </div>
+
+          <div class="table-row">
+            <div class="feature-name">Updates</div>
+            <div class="feature-value">1 Year</div>
+            <div class="feature-value">Lifetime</div>
+            <div class="feature-value">Lifetime</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section scroll-animate">
+    <div class="container">
+      <div class="section-header">
+        <h2>Frequently Asked Questions</h2>
+        <p>Everything you need to know about MappLock pricing</p>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item"
+             *ngFor="let faq of faqs; let i = index"
+             [class.open]="faq.open">
+          <div class="faq-question" (click)="toggleFaq(i)">
+            <h4>{{ faq.question }}</h4>
+            <span class="faq-toggle">{{ faq.open ? '−' : '+' }}</span>
+          </div>
+          <div class="faq-answer" [class.open]="faq.open">
+            <p>{{ faq.answer }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education Discount Section -->
+  <section class="education-section scroll-animate">
+    <div class="container">
+      <div class="education-card">
+        <div class="education-content">
+          <div class="education-icon">🎓</div>
+          <h3>Education Discount</h3>
+          <p>Students, teachers, and educational institutions get 50% off all plans. Help us support learning and focus in educational environments.</p>
+          <div class="education-benefits">
+            <span>✓ 50% discount on all plans</span>
+            <span>✓ Extended free trial</span>
+            <span>✓ Dedicated education support</span>
+            <span>✓ Bulk licensing available</span>
+          </div>
+        </div>
+        <div class="education-actions">
+          <button class="btn-education" (click)="contactEducation()">
+            Get Education Pricing
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA Section -->
+  <section class="final-cta-section scroll-animate">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to transform your Mac into a professional kiosk?</h2>
+        <p>Join thousands of educators, businesses, and organizations using MappLock to create secure, focused computing environments.</p>
+
+        <div class="cta-actions">
+          <button class="btn-primary-large" (click)="startFreeTrial()">
+            Start Your Free Trial
+          </button>
+          <button class="btn-secondary-large" (click)="scheduleDemo()">
+            Schedule a Demo
+          </button>
+        </div>
+
+        <div class="cta-guarantee">
+          <span class="guarantee-text">💰 30-day money-back guarantee</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

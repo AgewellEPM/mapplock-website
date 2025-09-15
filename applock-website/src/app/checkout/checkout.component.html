@@ -1,0 +1,181 @@
+<div class="checkout-container">
+  <!-- Background Effects -->
+  <div class="checkout-bg">
+    <div class="gradient-orb gradient-orb-1"></div>
+    <div class="gradient-orb gradient-orb-2"></div>
+    <div class="gradient-orb gradient-orb-3"></div>
+  </div>
+
+  <!-- Receipt View -->
+  <div class="receipt-modal" *ngIf="showReceipt">
+    <div class="receipt-card">
+      <div class="receipt-header">
+        <div class="success-icon">✓</div>
+        <h2>Payment Successful!</h2>
+        <p>Thank you for your purchase</p>
+      </div>
+
+      <div class="receipt-body">
+        <div class="receipt-row">
+          <span class="receipt-label">Receipt ID</span>
+          <span class="receipt-value">{{receiptData.id}}</span>
+        </div>
+
+        <div class="receipt-row">
+          <span class="receipt-label">Date</span>
+          <span class="receipt-value">{{receiptData.date | date:'medium'}}</span>
+        </div>
+
+        <div class="receipt-row">
+          <span class="receipt-label">Customer</span>
+          <span class="receipt-value">{{receiptData.name}}</span>
+        </div>
+
+        <div class="receipt-row">
+          <span class="receipt-label">Email</span>
+          <span class="receipt-value">{{receiptData.email}}</span>
+        </div>
+
+        <div class="receipt-divider"></div>
+
+        <div class="receipt-product">
+          <h3>{{receiptData.product.name}} License</h3>
+          <ul class="receipt-features">
+            <li *ngFor="let feature of receiptData.product.features">{{feature}}</li>
+          </ul>
+        </div>
+
+        <div class="receipt-divider"></div>
+
+        <div class="receipt-row total">
+          <span class="receipt-label">Total Paid</span>
+          <span class="receipt-value">${{receiptData.total}}</span>
+        </div>
+
+        <div class="receipt-row">
+          <span class="receipt-label">Payment Method</span>
+          <span class="receipt-value">{{receiptData.paymentMethod}}</span>
+        </div>
+      </div>
+
+      <div class="receipt-footer">
+        <button class="btn-download-receipt" (click)="downloadReceipt()">
+          Download Receipt
+        </button>
+        <button class="btn-continue" (click)="continueShopping()">
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout View -->
+  <div class="checkout-content" *ngIf="!showReceipt">
+    <div class="checkout-header">
+      <h1>Complete Your Purchase</h1>
+      <p>Select your plan and enter payment details</p>
+    </div>
+
+    <!-- Product Selection -->
+    <div class="products-grid">
+      <div class="product-card"
+           *ngFor="let product of products"
+           [class.selected]="selectedProduct?.id === product.id"
+           [class.popular]="product.popular"
+           (click)="selectProduct(product)">
+
+        <div class="popular-badge" *ngIf="product.popular">
+          Most Popular
+        </div>
+
+        <h3 class="product-name">{{product.name}}</h3>
+        <div class="product-price">
+          <span class="currency">$</span>
+          <span class="amount">{{product.price}}</span>
+        </div>
+
+        <ul class="product-features">
+          <li *ngFor="let feature of product.features">
+            <span class="check-icon">✓</span>
+            {{feature}}
+          </li>
+        </ul>
+
+        <div class="selection-indicator">
+          <div class="radio-outer">
+            <div class="radio-inner" *ngIf="selectedProduct?.id === product.id"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Form -->
+    <div class="payment-form" *ngIf="selectedProduct">
+      <h2>Payment Information</h2>
+
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text"
+               id="name"
+               [(ngModel)]="name"
+               placeholder="John Doe"
+               class="form-input">
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email"
+               id="email"
+               [(ngModel)]="email"
+               placeholder="john@example.com"
+               class="form-input">
+      </div>
+
+      <div class="form-group">
+        <label>Card Information</label>
+        <div class="card-input-group">
+          <input type="text"
+                 placeholder="4242 4242 4242 4242"
+                 class="form-input card-number">
+          <div class="card-row">
+            <input type="text"
+                   placeholder="MM/YY"
+                   class="form-input card-expiry">
+            <input type="text"
+                   placeholder="CVC"
+                   class="form-input card-cvc">
+          </div>
+        </div>
+      </div>
+
+      <div class="order-summary">
+        <div class="summary-row">
+          <span>{{selectedProduct.name}} License</span>
+          <span>${{selectedProduct.price}}</span>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span>${{selectedProduct.price}}</span>
+        </div>
+      </div>
+
+      <button class="btn-pay"
+              (click)="processPayment()"
+              [disabled]="loading || !email || !name">
+        <span *ngIf="!loading">Pay ${{selectedProduct.price}}</span>
+        <span *ngIf="loading" class="loading-spinner">Processing...</span>
+      </button>
+
+      <div class="secure-badge">
+        <span class="lock-icon">🔒</span>
+        Secure payment powered by Stripe
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="!selectedProduct">
+      <p>Please select a plan to continue</p>
+    </div>
+  </div>
+</div>

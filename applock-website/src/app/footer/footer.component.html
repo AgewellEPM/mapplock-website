@@ -1,0 +1,144 @@
+<!-- Universal Footer Component -->
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- Main Footer Content -->
+    <div class="footer-main">
+      <div class="footer-brand">
+        <div class="brand-logo">
+          <span class="brand-icon">🔒</span>
+          <span class="brand-name">MappLock</span>
+        </div>
+        <p class="brand-tagline">
+          Professional kiosk mode for macOS. Transform any Mac into a secure, focused computing environment.
+        </p>
+        <div class="brand-meta">
+          <span class="version">Version 2.0</span>
+          <span class="separator">•</span>
+          <span class="compatibility">macOS 12+</span>
+        </div>
+      </div>
+
+      <!-- Footer Links -->
+      <div class="footer-links">
+        <div class="link-group">
+          <h4 class="group-title">Product</h4>
+          <ul class="link-list">
+            <li *ngFor="let link of footerLinks.product">
+              <a [routerLink]="link.route" class="footer-link">{{ link.label }}</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="link-group">
+          <h4 class="group-title">Support</h4>
+          <ul class="link-list">
+            <li *ngFor="let link of footerLinks.support">
+              <a *ngIf="link.url" [href]="link.url" class="footer-link">{{ link.label }}</a>
+              <a *ngIf="link.route" [routerLink]="link.route" class="footer-link">{{ link.label }}</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="link-group">
+          <h4 class="group-title">Company</h4>
+          <ul class="link-list">
+            <li *ngFor="let link of footerLinks.company">
+              <a [routerLink]="link.route" class="footer-link">{{ link.label }}</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="link-group">
+          <h4 class="group-title">Connect</h4>
+          <ul class="link-list social-links">
+            <li *ngFor="let social of footerLinks.social">
+              <a [href]="social.url" class="footer-link social-link" target="_blank" rel="noopener">
+                <span class="social-icon">{{ social.icon }}</span>
+                <span class="social-label">{{ social.label }}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer CTA Section -->
+    <div class="footer-cta">
+      <div class="cta-content">
+        <h3 class="cta-title">Ready to try MappLock?</h3>
+        <p class="cta-subtitle">Start your 14-day free trial today</p>
+      </div>
+      <div class="cta-actions">
+        <button class="cta-btn primary" (click)="openDemoBrowser()">
+          Try Demo
+        </button>
+        <a href="mailto:sales@mapplock.com" class="cta-btn secondary">
+          Contact Sales
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+      <div class="footer-legal">
+        <p class="copyright">
+          &copy; {{ currentYear }} MappLock. All rights reserved.
+        </p>
+        <div class="legal-links">
+          <a routerLink="/privacy" class="legal-link">Privacy</a>
+          <span class="separator">•</span>
+          <a routerLink="/terms" class="legal-link">Terms</a>
+          <span class="separator">•</span>
+          <a routerLink="/security" class="legal-link">Security</a>
+        </div>
+      </div>
+
+      <div class="footer-badges">
+        <div class="badge apple">
+          <span class="badge-icon">🍎</span>
+          <span class="badge-text">macOS Native</span>
+        </div>
+        <div class="badge secure">
+          <span class="badge-icon">🛡️</span>
+          <span class="badge-text">Secure by Design</span>
+        </div>
+        <div class="badge performance">
+          <span class="badge-icon">⚡</span>
+          <span class="badge-text">High Performance</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Newsletter Signup -->
+    <div class="newsletter-section">
+      <div class="newsletter-content">
+        <h4 class="newsletter-title">Stay Updated</h4>
+        <p class="newsletter-subtitle">Get the latest MappLock news and updates</p>
+      </div>
+      <div class="newsletter-form">
+        <input type="email"
+               placeholder="Enter your email"
+               class="newsletter-input"
+               #emailInput>
+        <button class="newsletter-btn"
+                (click)="subscribeNewsletter(emailInput.value)">
+          Subscribe
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer Background Effects -->
+  <div class="footer-bg">
+    <div class="footer-gradient"></div>
+    <div class="footer-particles">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+  </div>
+</footer>

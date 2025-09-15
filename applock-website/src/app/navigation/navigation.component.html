@@ -1,0 +1,87 @@
+<nav class="navigation" [class.scrolled]="isScrolled">
+  <!-- Background Blur Layer -->
+  <div class="nav-background"></div>
+
+  <!-- Ambient Glow Effects -->
+  <div class="nav-glow nav-glow-1"></div>
+  <div class="nav-glow nav-glow-2"></div>
+
+  <div class="nav-container">
+    <!-- Logo Section -->
+    <div class="nav-logo" routerLink="/" (click)="closeMobileMenu()">
+      <div class="logo-icon">🔒</div>
+      <div class="logo-text">
+        <span class="logo-name">MappLock</span>
+        <span class="logo-tagline">Professional</span>
+      </div>
+    </div>
+
+    <!-- Desktop Navigation Links -->
+    <div class="nav-links desktop-only">
+      <a
+        *ngFor="let item of navigationItems"
+        [routerLink]="item.route"
+        [fragment]="item.fragment || undefined"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: item.route === '/' }"
+        class="nav-link"
+        (click)="navigateToSection(item.route, item.fragment)">
+        <span class="nav-icon">{{ item.icon }}</span>
+        <span class="nav-label">{{ item.label }}</span>
+        <div class="nav-link-glow"></div>
+      </a>
+    </div>
+
+    <!-- CTA Button -->
+    <div class="nav-cta desktop-only">
+      <button class="cta-button" (click)="startTrial()">
+        <span class="cta-icon">🎮</span>
+        <span class="cta-text">Try Demo</span>
+        <div class="cta-shimmer"></div>
+      </button>
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <button
+      class="mobile-menu-toggle mobile-only"
+      [class.active]="isMobileMenuOpen"
+      (click)="toggleMobileMenu()">
+      <div class="hamburger-line"></div>
+      <div class="hamburger-line"></div>
+      <div class="hamburger-line"></div>
+    </button>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu" [class.open]="isMobileMenuOpen">
+    <div class="mobile-menu-background"></div>
+    <div class="mobile-menu-content">
+      <div class="mobile-nav-links">
+        <a
+          *ngFor="let item of navigationItems"
+          [routerLink]="item.route"
+          [fragment]="item.fragment || undefined"
+          class="mobile-nav-link"
+          (click)="navigateToSection(item.route, item.fragment)">
+          <span class="mobile-nav-icon">{{ item.icon }}</span>
+          <span class="mobile-nav-label">{{ item.label }}</span>
+          <div class="mobile-link-arrow">→</div>
+        </a>
+      </div>
+
+      <div class="mobile-cta-section">
+        <button class="mobile-cta-button" (click)="startTrial()">
+          <span class="mobile-cta-icon">🎮</span>
+          <span class="mobile-cta-text">Try Demo</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Backdrop -->
+  <div
+    class="mobile-backdrop"
+    [class.visible]="isMobileMenuOpen"
+    (click)="closeMobileMenu()">
+  </div>
+</nav>

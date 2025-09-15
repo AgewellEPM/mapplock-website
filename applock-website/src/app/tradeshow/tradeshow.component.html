@@ -1,0 +1,312 @@
+<div class="tradeshow-page">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-background">
+      <div class="hero-glow hero-glow-1"></div>
+      <div class="hero-glow hero-glow-2"></div>
+      <div class="hero-particles"></div>
+    </div>
+
+    <div class="hero-content animate-on-scroll">
+      <h1 class="hero-title">
+        Transform Your Booth Into An
+        <span class="title-highlight">Interactive Experience</span>
+      </h1>
+
+      <p class="hero-description">
+        Secure kiosk mode solutions that captivate visitors, generate qualified leads,
+        and showcase your products with unmatched reliability and security.
+      </p>
+
+      <div class="hero-actions">
+        <button class="cta-primary" (click)="requestDemo()">
+          <span class="cta-icon">🏢</span>
+          <span class="cta-text">Trade Show Solutions</span>
+          <div class="cta-shimmer"></div>
+        </button>
+
+        <button class="cta-secondary" (click)="downloadGuide()">
+          <span class="cta-icon">📖</span>
+          <span class="cta-text">Download Guide</span>
+        </button>
+      </div>
+
+      <div class="hero-stats" style="margin-bottom: 40px !important;">
+        <div class="stat-item">
+          <span class="stat-number">500+</span>
+          <span class="stat-label">Trade Shows</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number">10k+</span>
+          <span class="stat-label">Kiosk Deployments</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number">99.9%</span>
+          <span class="stat-label">Uptime</span>
+        </div>
+      </div>
+
+      <!-- App Screenshot -->
+      <div class="app-screenshot" style="margin-top: 130px !important; position: relative !important; z-index: 10 !important; display: flex !important; justify-content: center !important;">
+        <div class="screenshot-container" style="transform: scale(1.2) !important;">
+          <img src="assets/applock-interface.png" alt="MappLock Trade Show Kiosk Mode" class="hero-screenshot">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kiosk Features Section -->
+  <section class="features-section">
+    <div class="section-container">
+      <div class="section-header animate-on-scroll">
+        <div class="section-badge">
+          <span class="badge-icon">🔐</span>
+          <span class="badge-text">Kiosk Mode Features</span>
+        </div>
+
+        <h2 class="section-title">
+          Enterprise-Grade Kiosk Solutions
+          <span class="title-highlight">Built for Trade Shows</span>
+        </h2>
+
+        <p class="section-description">
+          Transform any device into a secure, interactive kiosk that delivers
+          consistent experiences while protecting your brand and data.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div
+          *ngFor="let feature of kioskFeatures; let i = index"
+          class="feature-card animate-on-scroll"
+          [style.animation-delay.ms]="i * 100">
+
+          <div class="feature-icon-container">
+            <div class="feature-icon">{{ feature.icon }}</div>
+            <div class="feature-glow"></div>
+          </div>
+
+          <div class="feature-content">
+            <h3 class="feature-title">{{ feature.title }}</h3>
+            <p class="feature-description">{{ feature.description }}</p>
+
+            <div class="feature-benefits">
+              <div
+                *ngFor="let benefit of feature.benefits"
+                class="benefit-item">
+                <span class="benefit-check">✓</span>
+                <span class="benefit-text">{{ benefit }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-overlay"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Demo Scenarios Section -->
+  <section class="scenarios-section">
+    <div class="section-container">
+      <div class="section-header animate-on-scroll">
+        <div class="section-badge">
+          <span class="badge-icon">🎮</span>
+          <span class="badge-text">Demo Scenarios</span>
+        </div>
+
+        <h2 class="section-title">
+          Real-World Applications
+          <span class="title-highlight">Proven at Scale</span>
+        </h2>
+      </div>
+
+      <div class="scenarios-grid">
+        <div
+          *ngFor="let scenario of demoScenarios; let i = index"
+          class="scenario-card animate-on-scroll"
+          [style.animation-delay.ms]="i * 150">
+
+          <div class="scenario-header">
+            <div class="scenario-image">{{ scenario.image }}</div>
+            <h3 class="scenario-title">{{ scenario.title }}</h3>
+          </div>
+
+          <p class="scenario-description">{{ scenario.description }}</p>
+
+          <div class="scenario-features">
+            <div
+              *ngFor="let feature of scenario.features"
+              class="scenario-feature">
+              <span class="feature-dot"></span>
+              <span class="feature-name">{{ feature }}</span>
+            </div>
+          </div>
+
+          <div class="scenario-overlay"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="benefits-section">
+    <div class="benefits-background">
+      <div class="benefits-glow"></div>
+    </div>
+
+    <div class="section-container">
+      <div class="section-header animate-on-scroll">
+        <div class="section-badge">
+          <span class="badge-icon">📈</span>
+          <span class="badge-text">Proven Results</span>
+        </div>
+
+        <h2 class="section-title">
+          Measurable Trade Show Success
+        </h2>
+      </div>
+
+      <div class="benefits-grid">
+        <div
+          *ngFor="let benefit of tradeshowBenefits; let i = index"
+          class="benefit-card animate-on-scroll"
+          [style.animation-delay.ms]="i * 100">
+
+          <div class="benefit-metric">{{ benefit.metric }}</div>
+          <div class="benefit-label">{{ benefit.label }}</div>
+          <div class="benefit-description">{{ benefit.description }}</div>
+
+          <div class="benefit-glow"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Demo Section -->
+  <section class="demo-section">
+    <div class="section-container">
+      <div class="demo-content animate-on-scroll">
+        <div class="demo-text">
+          <div class="section-badge">
+            <span class="badge-icon">🚀</span>
+            <span class="badge-text">Live Demo</span>
+          </div>
+
+          <h2 class="demo-title">
+            See MappLock Kiosk Mode in Action
+          </h2>
+
+          <p class="demo-description">
+            Experience our kiosk solution firsthand. Schedule a personalized
+            demonstration to see how MappLock can transform your trade show presence.
+          </p>
+
+          <div class="demo-features">
+            <div class="demo-feature">
+              <span class="demo-icon">⚡</span>
+              <span class="demo-text">Live device lockdown demonstration</span>
+            </div>
+            <div class="demo-feature">
+              <span class="demo-icon">🎯</span>
+              <span class="demo-text">Custom kiosk configuration walkthrough</span>
+            </div>
+            <div class="demo-feature">
+              <span class="demo-icon">📊</span>
+              <span class="demo-text">Real-time analytics dashboard tour</span>
+            </div>
+          </div>
+
+          <button class="demo-cta" (click)="scheduleConsultation()">
+            <span class="cta-icon">📅</span>
+            <span class="cta-text">Schedule Consultation</span>
+            <div class="cta-shimmer"></div>
+          </button>
+        </div>
+
+        <div class="demo-visual">
+          <div class="demo-mockup">
+            <div class="mockup-screen">
+              <div class="mockup-header">
+                <div class="mockup-dots">
+                  <span class="dot dot-red"></span>
+                  <span class="dot dot-yellow"></span>
+                  <span class="dot dot-green"></span>
+                </div>
+                <div class="mockup-title">Kiosk Dashboard</div>
+              </div>
+
+              <div class="mockup-content">
+                <div class="kiosk-interface">
+                  <div class="interface-header">
+                    <div class="status-indicator active"></div>
+                    <span class="status-text">Kiosk Active</span>
+                  </div>
+
+                  <div class="interface-stats">
+                    <div class="stat-box">
+                      <div class="stat-value">47</div>
+                      <div class="stat-label">Active Sessions</div>
+                    </div>
+                    <div class="stat-box">
+                      <div class="stat-value">3.2m</div>
+                      <div class="stat-label">Avg Session</div>
+                    </div>
+                    <div class="stat-box">
+                      <div class="stat-value">156</div>
+                      <div class="stat-label">Leads Today</div>
+                    </div>
+                  </div>
+
+                  <div class="interface-controls">
+                    <button class="control-btn primary">Lock All Devices</button>
+                    <button class="control-btn secondary">Reset Sessions</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mockup-glow"></div>
+            <div class="mockup-reflection"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-background">
+      <div class="cta-glow cta-glow-1"></div>
+      <div class="cta-glow cta-glow-2"></div>
+    </div>
+
+    <div class="section-container">
+      <div class="cta-content animate-on-scroll">
+        <h2 class="cta-title">
+          Ready to Revolutionize Your Trade Show Experience?
+        </h2>
+
+        <p class="cta-description">
+          Join hundreds of companies who trust MappLock to secure their
+          trade show demonstrations and captivate their audiences.
+        </p>
+
+        <div class="cta-actions">
+          <button class="cta-primary large" (click)="requestDemo()">
+            <span class="cta-icon">🎯</span>
+            <span class="cta-text">Try Demo Now</span>
+            <div class="cta-shimmer"></div>
+          </button>
+
+          <div class="cta-note">
+            <span class="note-icon">⚡</span>
+            <span class="note-text">Setup in under 5 minutes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

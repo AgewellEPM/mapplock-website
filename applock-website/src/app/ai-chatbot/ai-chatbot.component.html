@@ -1,0 +1,117 @@
+<!-- Chat Button - Only show when chat is closed -->
+<button class="chat-button"
+        (click)="toggleChat()"
+        [class.glow]="!isOpen"
+        [class.hidden]="isOpen">
+  <span class="chat-icon">💬</span>
+  <span class="chat-text">Questions?</span>
+</button>
+
+<!-- Chat Window -->
+<div class="chat-window" [class.open]="isOpen" [class.minimized]="minimized">
+  <!-- Chat Header -->
+  <div class="chat-header">
+    <div class="header-left">
+      <span class="bot-avatar">🔒</span>
+      <div class="bot-info">
+        <h4>MappLock Assistant</h4>
+        <span class="status-indicator">
+          <span class="status-dot"></span>
+          Online & ready to help!
+        </span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="header-btn" (click)="minimizeChat()" title="Minimize">
+        <span>{{ minimized ? '⬆' : '⬇' }}</span>
+      </button>
+      <button class="header-btn" (click)="closeChat()" title="Close">
+        <span>✕</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Chat Body -->
+  <div class="chat-body" #chatContainer *ngIf="!minimized">
+    <!-- Messages -->
+    <div class="messages-container">
+      <div *ngFor="let message of messages"
+           class="message"
+           [class.user-message]="message.sender === 'user'"
+           [class.bot-message]="message.sender === 'bot'">
+
+        <div class="message-avatar" *ngIf="message.sender === 'bot'">
+          <span>🔒</span>
+        </div>
+
+        <div class="message-content">
+          <div class="message-bubble">
+            {{ message.content }}
+          </div>
+          <div class="message-time">
+            {{ message.timestamp | date:'short' }}
+          </div>
+        </div>
+
+        <div class="message-avatar" *ngIf="message.sender === 'user'">
+          <span>👤</span>
+        </div>
+      </div>
+
+      <!-- Typing Indicator -->
+      <div class="message bot-message" *ngIf="isTyping">
+        <div class="message-avatar">
+          <span>🔒</span>
+        </div>
+        <div class="message-content">
+          <div class="typing-indicator">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions" *ngIf="messages.length <= 2">
+      <h5>Quick Questions:</h5>
+      <div class="quick-buttons">
+        <button (click)="userInput = 'What can MappLock do?'; sendMessage()">
+          What can it do? 🚀
+        </button>
+        <button (click)="userInput = 'How much does it cost?'; sendMessage()">
+          Pricing 💰
+        </button>
+        <button (click)="userInput = 'Can I see a demo?'; sendMessage()">
+          Demo? 🎁
+        </button>
+        <button (click)="userInput = 'How do I use it for education?'; sendMessage()">
+          Education use 🎓
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chat Footer -->
+  <div class="chat-footer" *ngIf="!minimized">
+    <div class="input-container">
+      <textarea
+        [(ngModel)]="userInput"
+        (keypress)="handleKeyPress($event)"
+        placeholder="Ask me anything about MappLock..."
+        class="chat-input"
+        rows="1">
+      </textarea>
+      <button
+        class="send-button"
+        (click)="sendMessage()"
+        [disabled]="!userInput.trim()">
+        <span>➤</span>
+      </button>
+    </div>
+    <div class="chat-footer-info">
+      <span>Press Enter to send • Shift+Enter for new line</span>
+    </div>
+  </div>
+</div>

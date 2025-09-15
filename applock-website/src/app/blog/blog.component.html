@@ -1,0 +1,179 @@
+<!-- MappLock Blog -->
+<div class="blog-container">
+  <!-- Background Effects -->
+  <div class="smoke-container">
+    <div class="smoke smoke-1"></div>
+    <div class="smoke smoke-2"></div>
+    <div class="smoke smoke-3"></div>
+  </div>
+
+  <div class="orb-container">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="blog-hero scroll-animate">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="hero-highlight">MappLock Blog</span><br>
+          Insights & Updates
+        </h1>
+        <p class="hero-subtitle">
+          Stay updated with the latest tips, tutorials, and insights about kiosk mode, digital security, and creating focused computing environments.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Post -->
+  <section class="featured-section scroll-animate">
+    <div class="container">
+      <div class="featured-post">
+        <div class="featured-content">
+          <div class="post-meta">
+            <span class="post-category">{{ featuredPost.category }}</span>
+            <span class="post-featured">Featured</span>
+          </div>
+          <h2 class="featured-title">{{ featuredPost.title }}</h2>
+          <p class="featured-excerpt">{{ featuredPost.excerpt }}</p>
+          <div class="post-details">
+            <span class="post-author">{{ featuredPost.author }}</span>
+            <span class="separator">•</span>
+            <span class="post-date">{{ featuredPost.date }}</span>
+            <span class="separator">•</span>
+            <span class="post-read-time">{{ featuredPost.readTime }}</span>
+          </div>
+          <div class="featured-actions">
+            <button class="btn-read" (click)="readPost(featuredPost.id)">
+              Read Article
+            </button>
+            <button class="btn-demo" (click)="openDemoBrowser()">
+              Try Demo
+            </button>
+          </div>
+        </div>
+        <div class="featured-image">
+          <div class="image-placeholder">
+            <div class="placeholder-icon">📖</div>
+            <div class="placeholder-text">Featured Article</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category Filter -->
+  <section class="filter-section scroll-animate">
+    <div class="container">
+      <div class="filter-header">
+        <h3>Browse by Category</h3>
+        <p>Find articles that match your interests</p>
+      </div>
+      <div class="category-filters">
+        <button class="filter-btn"
+                *ngFor="let category of categories"
+                [class.active]="category === selectedCategory"
+                (click)="filterByCategory(category)">
+          {{ category }}
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Grid -->
+  <section class="blog-section scroll-animate">
+    <div class="container">
+      <div class="blog-grid">
+        <article class="blog-card"
+                 *ngFor="let post of filteredPosts; let i = index">
+          <div class="card-image">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">
+                {{ getCategoryIcon(post.category) }}
+              </div>
+            </div>
+            <div class="card-category">{{ post.category }}</div>
+          </div>
+
+          <div class="card-content">
+            <h3 class="card-title">{{ post.title }}</h3>
+            <p class="card-excerpt">{{ post.excerpt }}</p>
+
+            <div class="card-tags">
+              <span class="tag" *ngFor="let tag of post.tags">{{ tag }}</span>
+            </div>
+
+            <div class="card-meta">
+              <div class="meta-info">
+                <span class="author">{{ post.author }}</span>
+                <span class="separator">•</span>
+                <span class="date">{{ post.date }}</span>
+                <span class="separator">•</span>
+                <span class="read-time">{{ post.readTime }}</span>
+              </div>
+              <button class="read-btn" (click)="readPost(post.id)">
+                Read →
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Load More -->
+      <div class="load-more-section">
+        <button class="btn-load-more">
+          Load More Articles
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Signup -->
+  <section class="newsletter-section scroll-animate">
+    <div class="container">
+      <div class="newsletter-card">
+        <div class="newsletter-content">
+          <div class="newsletter-icon">📧</div>
+          <h3>Stay in the Loop</h3>
+          <p>Get the latest MappLock updates, tutorials, and industry insights delivered to your inbox.</p>
+          <div class="newsletter-benefits">
+            <span>✓ Weekly updates</span>
+            <span>✓ Exclusive tips</span>
+            <span>✓ Early access</span>
+            <span>✓ No spam</span>
+          </div>
+        </div>
+        <div class="newsletter-form">
+          <input type="email"
+                 placeholder="Enter your email address"
+                 class="newsletter-input"
+                 #emailInput>
+          <button class="newsletter-btn"
+                  (click)="subscribeNewsletter(emailInput.value)">
+            Subscribe
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta-section scroll-animate">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Ready to Experience MappLock?</h2>
+        <p>Transform your Mac into a professional kiosk and create secure, focused computing environments.</p>
+        <div class="cta-actions">
+          <button class="btn-primary" (click)="openDemoBrowser()">
+            Try Demo
+          </button>
+          <a href="mailto:hello@mapplock.com" class="btn-secondary">
+            Contact Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

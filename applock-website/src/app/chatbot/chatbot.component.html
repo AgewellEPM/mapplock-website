@@ -1,0 +1,101 @@
+<!-- AI Chatbot Widget -->
+<div class="chatbot-container" [class.open]="isOpen" [class.minimized]="isMinimized">
+
+  <!-- Chat Button (when closed) -->
+  <button class="chat-button" *ngIf="!isOpen" (click)="toggleChat()">
+    <span class="chat-icon">💬</span>
+    <span class="chat-label">Chat with AI</span>
+    <span class="notification-badge" *ngIf="hasNewMessage">1</span>
+  </button>
+
+  <!-- Chat Window (when open) -->
+  <div class="chat-window" *ngIf="isOpen">
+
+    <!-- Chat Header -->
+    <div class="chat-header">
+      <div class="header-left">
+        <div class="bot-avatar">
+          <span class="avatar-icon">🤖</span>
+        </div>
+        <div class="header-info">
+          <h3 class="bot-name">MappLock Assistant</h3>
+          <span class="status-indicator">
+            <span class="status-dot"></span>
+            Online
+          </span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="action-btn" (click)="minimizeChat()">
+          <span *ngIf="!isMinimized">_</span>
+          <span *ngIf="isMinimized">□</span>
+        </button>
+        <button class="action-btn" (click)="closeChat()">×</button>
+      </div>
+    </div>
+
+    <!-- Chat Messages -->
+    <div class="chat-messages" #messagesContainer *ngIf="!isMinimized">
+
+      <!-- Messages List -->
+      <div class="message" *ngFor="let message of messages"
+           [class.user-message]="message.sender === 'user'"
+           [class.bot-message]="message.sender === 'bot'">
+
+        <div class="message-avatar" *ngIf="message.sender === 'bot'">
+          <span class="mini-avatar">🤖</span>
+        </div>
+
+        <div class="message-content">
+          <div class="message-bubble">
+            <p [innerHTML]="message.text"></p>
+          </div>
+          <span class="message-time">{{ formatTime(message.timestamp) }}</span>
+        </div>
+      </div>
+
+      <!-- Typing Indicator -->
+      <div class="message bot-message" *ngIf="isTyping">
+        <div class="message-avatar">
+          <span class="mini-avatar">🤖</span>
+        </div>
+        <div class="message-content">
+          <div class="typing-indicator">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Replies -->
+    <div class="quick-replies" *ngIf="!isMinimized && messages.length <= 1">
+      <div class="quick-reply-header">Quick Actions:</div>
+      <div class="quick-reply-buttons">
+        <button class="quick-reply-btn"
+                *ngFor="let reply of quickReplies"
+                (click)="sendQuickReply(reply.value)">
+          {{ reply.label }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Chat Input -->
+    <div class="chat-input" *ngIf="!isMinimized">
+      <input type="text"
+             class="message-input"
+             [(ngModel)]="userInput"
+             (keyup.enter)="sendMessage()"
+             placeholder="Type your message...">
+      <button class="send-btn" (click)="sendMessage()" [disabled]="!userInput.trim()">
+        <span class="send-icon">→</span>
+      </button>
+    </div>
+
+    <!-- Powered By Footer -->
+    <div class="chat-footer" *ngIf="!isMinimized">
+      <span class="powered-by">Powered by MappLock AI</span>
+    </div>
+  </div>
+</div>

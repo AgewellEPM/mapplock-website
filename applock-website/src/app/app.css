@@ -1,0 +1,103 @@
+/* App Component - Enhanced Container with Polish */
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+/* Smooth Page Transitions */
+router-outlet + * {
+  animation: pageEnter 0.5s ease-out;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Main Content Area */
+router-outlet {
+  flex: 1 0 auto;
+  display: block;
+}
+
+/* Footer Spacing */
+app-footer {
+  margin-top: auto;
+}
+
+/* Ensure Chatbot is Above Everything */
+app-chatbot {
+  position: fixed;
+  z-index: 10000;
+}
+
+/* Smooth Scrolling for All Pages */
+:root {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #3b82f6, #a855f7);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #2563eb, #9333ea);
+}
+
+/* Loading State for Lazy Components */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  color: #3b82f6;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  router-outlet + * {
+    animation: mobilePageEnter 0.3s ease-out;
+  }
+
+  @keyframes mobilePageEnter {
+    from {
+      opacity: 0;
+      transform: translateX(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  router-outlet + * {
+    animation: none;
+  }
+
+  :root {
+    scroll-behavior: auto;
+  }
+}

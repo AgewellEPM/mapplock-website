@@ -1,0 +1,458 @@
+<div class="demo-container">
+  <!-- Demo Header Section -->
+  <div class="demo-header">
+    <h2 class="demo-title">
+      ✅ Interactive MappLock Demo: Lock the Site You're On
+    </h2>
+    <p class="demo-subtitle">
+      📍 Experience MappLock right here — try locking this browser window
+    </p>
+  </div>
+
+  <!-- Launch Demo Button -->
+  <div class="demo-launch" *ngIf="!isDemoOpen">
+    <button class="launch-btn" (click)="openDemo()">
+      <span class="launch-icon">🚀</span>
+      <span class="launch-text">Launch Interactive Demo</span>
+    </button>
+    <p class="demo-hint">Click to open a simulated browser you can lock</p>
+  </div>
+
+  <!-- Demo Browser Popup -->
+  <div class="demo-popup-overlay" *ngIf="isDemoOpen" (click)="closeDemo()">
+    <div class="demo-browser-popup"
+         [class.fullscreen]="isFullscreen"
+         id="demo-browser"
+         (click)="$event.stopPropagation()">
+
+      <!-- Window Controls -->
+      <div class="window-controls">
+        <button class="window-btn close" (click)="closeDemo()" [disabled]="isLocked">
+          <span></span>
+        </button>
+        <button class="window-btn minimize" (click)="minimizeDemo()" [disabled]="isLocked">
+          <span></span>
+        </button>
+        <button class="window-btn fullscreen" (click)="toggleFullscreen()">
+          <span></span>
+        </button>
+      </div>
+
+      <!-- Browser Chrome -->
+      <div class="browser-chrome" [class.locked]="isLocked">
+        <div class="browser-nav">
+          <button class="nav-btn" (click)="goBack()" [disabled]="!canGoBack || isLocked">
+            ←
+          </button>
+          <button class="nav-btn" (click)="goForward()" [disabled]="!canGoForward || isLocked">
+            →
+          </button>
+          <button class="nav-btn" (click)="refreshPage()" [disabled]="isLocked">
+            ↻
+          </button>
+        </div>
+
+        <div class="url-bar" [class.locked]="isLocked">
+          <span class="lock-status">{{ isLocked ? '🔒' : '🔓' }}</span>
+          <input type="text"
+                 [(ngModel)]="currentUrl"
+                 [disabled]="isLocked"
+                 (keyup.enter)="handleUrlSubmit()"
+                 placeholder="Enter URL or search...">
+        </div>
+
+        <div class="status-message">
+          {{ lockMessage }}
+        </div>
+      </div>
+
+      <!-- Quick Sites Bar -->
+      <div class="quick-sites" *ngIf="!isLocked">
+        <button *ngFor="let site of demoSites"
+                class="site-btn"
+                (click)="navigateToSite(site.url)"
+                [class.active]="currentUrl.includes(site.url)">
+          <span class="site-icon">{{ site.icon }}</span>
+          <span class="site-name">{{ site.name }}</span>
+        </button>
+      </div>
+
+      <!-- Browser Content Area -->
+      <div class="browser-content" [class.locked]="isLocked">
+        <!-- Loading State -->
+        <div class="loading-overlay" *ngIf="isLoading">
+          <div class="loader"></div>
+          <p>Loading...</p>
+        </div>
+
+        <!-- Simulated Web Content -->
+        <div class="web-content" *ngIf="!isLoading && !isLocked">
+          <!-- Google Search -->
+          <div *ngIf="currentSite.content === 'google'" class="site-google">
+            <div class="google-logo">
+              <span class="google-text">
+                <span style="color: #4285F4">G</span>
+                <span style="color: #EA4335">o</span>
+                <span style="color: #FBBC04">o</span>
+                <span style="color: #4285F4">g</span>
+                <span style="color: #34A853">l</span>
+                <span style="color: #EA4335">e</span>
+              </span>
+            </div>
+            <div class="search-box">
+              <input type="text"
+                     [(ngModel)]="searchQuery"
+                     (keyup.enter)="handleSearchSubmit(searchQuery)"
+                     placeholder="Search Google or type a URL"
+                     [disabled]="isLocked"
+                     class="google-search-input">
+              <button class="search-btn"
+                      (click)="handleSearchSubmit(searchQuery)"
+                      [disabled]="isLocked">
+                Google Search
+              </button>
+              <button class="lucky-btn" [disabled]="isLocked">
+                I'm Feeling Lucky
+              </button>
+            </div>
+            <div class="search-results" *ngIf="searchResults.length > 0">
+              <div class="results-count">About {{ searchResults.length * 1234567 | number }} results</div>
+              <div class="result"
+                   *ngFor="let result of searchResults"
+                   (click)="clickSearchResult(result.url)"
+                   [class.clickable]="result.url !== '#'">
+                <div class="result-url">{{ result.url }}</div>
+                <h3 class="result-title">{{ result.title }}</h3>
+                <p class="result-desc">{{ result.description }}</p>
+              </div>
+            </div>
+            <div class="google-footer" *ngIf="searchResults.length === 0">
+              <p>Try searching for: "kiosk", "mapplock", "mac apps", "classroom", or "trade show"</p>
+            </div>
+          </div>
+
+          <!-- Apple Store -->
+          <div *ngIf="currentSite.content === 'apple'" class="site-apple">
+            <div class="apple-header">
+              <span class="apple-logo">🍎</span>
+              <span>Apple Store</span>
+              <nav class="apple-nav">
+                <a [class.disabled]="isLocked">Mac</a>
+                <a [class.disabled]="isLocked">iPad</a>
+                <a [class.disabled]="isLocked">iPhone</a>
+                <a [class.disabled]="isLocked">Watch</a>
+              </nav>
+            </div>
+            <div class="apple-hero">
+              <h1>Mac</h1>
+              <p>Supercharged by Apple silicon.</p>
+            </div>
+            <div class="product-grid">
+              <div class="product-card" *ngFor="let product of appleProducts">
+                <div class="product-image">💻</div>
+                <h3>{{ product.name }}</h3>
+                <p class="product-specs">{{ product.specs }}</p>
+                <p class="product-price">From {{ product.price }}</p>
+                <button class="buy-btn" [disabled]="isLocked">Buy</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quiz Portal -->
+          <div *ngIf="currentSite.content === 'quiz'" class="site-quiz">
+            <div class="quiz-header">
+              <span class="quiz-logo">📝</span> Online Quiz Portal
+              <div class="quiz-timer">Time: 5:00</div>
+            </div>
+            <div class="quiz-content" *ngIf="!showQuizResult">
+              <div class="quiz-progress">
+                Question {{ currentQuizIndex + 1 }} of {{ quizQuestions.length }}
+                <div class="progress-bar">
+                  <div class="progress-fill"
+                       [style.width.%]="(currentQuizIndex + 1) / quizQuestions.length * 100">
+                  </div>
+                </div>
+              </div>
+              <h3>{{ quizQuestions[currentQuizIndex].question }}</h3>
+              <div class="quiz-options">
+                <button *ngFor="let option of quizQuestions[currentQuizIndex].options; let i = index"
+                        (click)="selectQuizAnswer(i)"
+                        [disabled]="isLocked"
+                        class="quiz-option">
+                  {{ ['A', 'B', 'C', 'D'][i] }}) {{ option }}
+                </button>
+              </div>
+            </div>
+            <div class="quiz-result" *ngIf="showQuizResult">
+              <h2>🎆 Quiz Complete!</h2>
+              <p class="score">Your Score: {{ quizScore }}/{{ quizQuestions.length }}</p>
+              <p class="grade">{{ quizScore === quizQuestions.length ? 'Perfect! 🎉' :
+                                  quizScore >= quizQuestions.length * 0.7 ? 'Great job! 👍' :
+                                  'Keep practicing! 💪' }}</p>
+              <button (click)="restartQuiz()" [disabled]="isLocked" class="restart-btn">
+                Try Again
+              </button>
+            </div>
+          </div>
+
+          <!-- Trade Show -->
+          <div *ngIf="currentSite.content === 'tradeshow'" class="site-tradeshow">
+            <div class="trade-header">
+              <span class="trade-logo">🎭</span> CES 2025
+              <nav class="trade-nav">
+                <a [class.disabled]="isLocked">Exhibitors</a>
+                <a [class.disabled]="isLocked">Schedule</a>
+                <a [class.disabled]="isLocked">Map</a>
+                <a [class.disabled]="isLocked">Register</a>
+              </nav>
+            </div>
+            <div class="trade-hero">
+              <h1>Innovation Awards Showcase</h1>
+              <p>January 7-10, 2025 • Las Vegas Convention Center</p>
+            </div>
+            <div class="trade-content">
+              <div class="showcase-grid">
+                <div class="showcase-item" [class.locked]="isLocked">
+                  <span class="showcase-icon">🤖</span>
+                  <h3>AI & Robotics</h3>
+                  <p>Next-gen autonomous systems</p>
+                  <button [disabled]="isLocked">View Exhibitors</button>
+                </div>
+                <div class="showcase-item" [class.locked]="isLocked">
+                  <span class="showcase-icon">🏠</span>
+                  <h3>Smart Home</h3>
+                  <p>Connected living solutions</p>
+                  <button [disabled]="isLocked">View Exhibitors</button>
+                </div>
+                <div class="showcase-item" [class.locked]="isLocked">
+                  <span class="showcase-icon">📊</span>
+                  <h3>Digital Health</h3>
+                  <p>Healthcare innovation</p>
+                  <button [disabled]="isLocked">View Exhibitors</button>
+                </div>
+                <div class="showcase-item" [class.locked]="isLocked">
+                  <span class="showcase-icon">🎮</span>
+                  <h3>Gaming & VR</h3>
+                  <p>Immersive experiences</p>
+                  <button [disabled]="isLocked">View Exhibitors</button>
+                </div>
+              </div>
+              <div class="trade-footer">
+                <p>Featured: MappLock Demo Station - Hall A, Booth 1234</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Education -->
+          <div *ngIf="currentSite.content === 'education'" class="site-education">
+            <div class="edu-header">
+              <span class="edu-logo">🎓</span> Khan Academy
+              <nav class="edu-nav">
+                <a [class.disabled]="isLocked">Courses</a>
+                <a [class.disabled]="isLocked">Progress</a>
+                <a [class.disabled]="isLocked">Profile</a>
+              </nav>
+            </div>
+            <div class="edu-content">
+              <div class="course-path">
+                Math > Algebra > Introduction
+              </div>
+              <h2>Algebra Basics: Variables and Expressions</h2>
+              <div class="lesson-video">
+                <div class="video-player">
+                  <div class="play-button" [class.disabled]="isLocked">▶</div>
+                  <div class="video-info">Duration: 12:34</div>
+                </div>
+              </div>
+              <div class="lesson-meta">
+                <div class="lesson-progress">
+                  <div class="progress-label">Course Progress: 3/10 lessons</div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 30%"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="lesson-controls">
+                <button [disabled]="isLocked" class="prev-btn">← Previous</button>
+                <button [disabled]="isLocked" class="practice-btn">Practice Problems</button>
+                <button [disabled]="isLocked" class="next-btn">Next Lesson →</button>
+              </div>
+              <div class="lesson-resources">
+                <h4>Resources</h4>
+                <ul>
+                  <li><a [class.disabled]="isLocked">📖 Transcript</a></li>
+                  <li><a [class.disabled]="isLocked">📝 Practice Sheet</a></li>
+                  <li><a [class.disabled]="isLocked">💡 Hints & Tips</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- MappLock Site -->
+          <div *ngIf="currentSite.content === 'mapplock'" class="site-mapplock">
+            <div class="mapplock-header">
+              <span class="mapplock-logo">🔒</span> MappLock
+              <nav class="mapplock-nav">
+                <a [class.disabled]="isLocked">Features</a>
+                <a [class.disabled]="isLocked">Pricing</a>
+                <a [class.disabled]="isLocked">Demo</a>
+                <a [class.disabled]="isLocked">Support</a>
+              </nav>
+            </div>
+            <div class="mapplock-hero">
+              <h1>Welcome to MappLock!</h1>
+              <p>You found us! This is exactly what you're experiencing right now.</p>
+              <div class="feature-grid">
+                <div class="feature">
+                  <span class="feature-icon">🔒</span>
+                  <h3>Secure Kiosk Mode</h3>
+                  <p>Lock any Mac app into a dedicated kiosk</p>
+                </div>
+                <div class="feature">
+                  <span class="feature-icon">🏫</span>
+                  <h3>Perfect for Schools</h3>
+                  <p>Keep students focused on learning</p>
+                </div>
+                <div class="feature">
+                  <span class="feature-icon">🎭</span>
+                  <h3>Trade Shows</h3>
+                  <p>Professional displays that stay locked</p>
+                </div>
+                <div class="feature">
+                  <span class="feature-icon">⚙️</span>
+                  <h3>Easy Setup</h3>
+                  <p>Configure once, deploy everywhere</p>
+                </div>
+              </div>
+              <button class="cta-btn" [disabled]="isLocked">Get MappLock Now</button>
+            </div>
+          </div>
+
+          <!-- Generic Website -->
+          <div *ngIf="currentSite.content === 'generic'" class="site-generic">
+            <div class="generic-header">
+              <span class="generic-logo">{{ currentSite.icon }}</span>
+              <span class="generic-title">{{ currentSite.data?.domain || 'Website' }}</span>
+            </div>
+            <div class="generic-content">
+              <h2>{{ currentSite.data?.domain || 'Web Page' }}</h2>
+              <p>This website is currently displayed in the MappLock demo browser.</p>
+              <div class="generic-info">
+                <p><strong>URL:</strong> {{ currentSite.data?.url || currentUrl }}</p>
+                <p><strong>Status:</strong> {{ isLocked ? 'Locked 🔒' : 'Unlocked 🔓' }}</p>
+              </div>
+              <div class="generic-actions">
+                <button [disabled]="isLocked">Interact with Page</button>
+                <button [disabled]="isLocked">View Source</button>
+                <button [disabled]="isLocked">Developer Tools</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lock Overlay -->
+        <div class="lock-overlay" *ngIf="isLocked">
+          <div class="lock-content">
+            <div class="lock-icon-large">🔒</div>
+            <h2>Application Locked</h2>
+            <p>This browser is now in secure kiosk mode</p>
+
+            <div class="lock-features">
+              <div class="lock-feature">
+                <span class="check">✓</span>
+                <span>No address bar access</span>
+              </div>
+              <div class="lock-feature">
+                <span class="check">✓</span>
+                <span>No keyboard shortcuts</span>
+              </div>
+              <div class="lock-feature">
+                <span class="check">✓</span>
+                <span>No dragging or copying</span>
+              </div>
+              <div class="lock-feature">
+                <span class="check">✓</span>
+                <span>No quitting allowed</span>
+              </div>
+            </div>
+
+            <div class="unlock-hint">
+              Press <kbd>⌘⌥U</kbd> to unlock
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Keyboard Shortcuts Help -->
+      <div class="shortcuts-help" *ngIf="!isLocked">
+        <div class="shortcut">
+          <kbd>⌘L</kbd> Lock Browser
+        </div>
+        <div class="shortcut">
+          <kbd>⌘⌥U</kbd> Unlock
+        </div>
+        <div class="shortcut">
+          <kbd>ESC</kbd> Close Demo
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unlock PIN Modal -->
+  <div class="unlock-modal" *ngIf="showUnlockPrompt">
+    <div class="unlock-dialog">
+      <h3>🔐 Enter PIN to Unlock</h3>
+      <p class="hint-text">Demo PIN: 1234</p>
+
+      <div class="pin-input-container">
+        <input type="password"
+               [(ngModel)]="unlockPin"
+               (keyup)="handlePinKeypress($event)"
+               placeholder="Enter PIN..."
+               maxlength="4"
+               class="pin-input"
+               autofocus>
+      </div>
+
+      <div class="unlock-actions">
+        <button class="unlock-btn cancel" (click)="cancelUnlock()">
+          Cancel
+        </button>
+        <button class="unlock-btn confirm" (click)="attemptUnlock()">
+          Unlock
+        </button>
+      </div>
+
+      <div class="error-message" *ngIf="wrongPinAttempts > 0">
+        {{ lockMessage }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Use Cases -->
+  <div class="use-cases">
+    <h3>🎯 Perfect for:</h3>
+    <div class="use-case-grid">
+      <div class="use-case-item">
+        <span class="use-icon">📚</span>
+        <h4>Exam Portals</h4>
+        <p>Lock students into test-taking software</p>
+      </div>
+      <div class="use-case-item">
+        <span class="use-icon">🏪</span>
+        <h4>On-site Kiosks</h4>
+        <p>Secure public-facing terminals</p>
+      </div>
+      <div class="use-case-item">
+        <span class="use-icon">🛍️</span>
+        <h4>Retail Displays</h4>
+        <p>Loop product demos endlessly</p>
+      </div>
+      <div class="use-case-item">
+        <span class="use-icon">🏫</span>
+        <h4>Classroom Tools</h4>
+        <p>Keep students focused on learning apps</p>
+      </div>
+    </div>
+  </div>
+</div>

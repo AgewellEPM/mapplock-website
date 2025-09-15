@@ -1,0 +1,208 @@
+<!-- Modal Overlay -->
+<div class="modal-overlay" (click)="closeModal()"></div>
+
+<!-- Modal Container -->
+<div class="modal-container" (click)="$event.stopPropagation()">
+
+  <!-- Close Button -->
+  <button class="modal-close" (click)="closeModal()" *ngIf="currentStep !== 'processing'">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  <!-- Step 1: Product Selection -->
+  <div class="modal-content" *ngIf="currentStep === 'plans'">
+    <div class="modal-header">
+      <h2>Choose Your Plan</h2>
+      <p>Select the perfect plan for your needs</p>
+    </div>
+
+    <div class="plans-grid">
+      <div class="plan-card"
+           *ngFor="let product of products"
+           [class.selected]="selectedProduct?.id === product.id"
+           [class.popular]="product.popular"
+           (click)="selectProduct(product)">
+
+        <div class="popular-badge" *ngIf="product.popular">
+          RECOMMENDED
+        </div>
+
+        <h3>{{product.name}}</h3>
+        <div class="plan-price">
+          <span class="currency">$</span>
+          <span class="amount">{{product.price}}</span>
+        </div>
+
+        <ul class="plan-features">
+          <li *ngFor="let feature of product.features">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M13 4L6 11L3 8" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            {{feature}}
+          </li>
+        </ul>
+
+        <button class="btn-select-plan">
+          Select {{product.name}}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: Payment Information -->
+  <div class="modal-content payment-step" *ngIf="currentStep === 'payment'">
+    <button class="btn-back" (click)="goBack()">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M12 4L6 10L12 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      Back to plans
+    </button>
+
+    <div class="payment-header">
+      <h2>Complete Your Purchase</h2>
+      <div class="selected-plan-summary">
+        <span class="plan-name">{{selectedProduct?.name}} Plan</span>
+        <span class="plan-price">${{selectedProduct?.price}}</span>
+      </div>
+    </div>
+
+    <form class="payment-form" (ngSubmit)="processPayment()">
+      <div class="form-section">
+        <h3>Contact Information</h3>
+
+        <div class="form-field">
+          <label>Full Name</label>
+          <input type="text"
+                 [(ngModel)]="name"
+                 name="name"
+                 placeholder="John Doe"
+                 required>
+        </div>
+
+        <div class="form-field">
+          <label>Email Address</label>
+          <input type="email"
+                 [(ngModel)]="email"
+                 name="email"
+                 placeholder="john@example.com"
+                 required>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Payment Details</h3>
+
+        <div class="form-field">
+          <label>Card Number</label>
+          <input type="text"
+                 name="cardNumber"
+                 placeholder="4242 4242 4242 4242"
+                 maxlength="19"
+                 (input)="formatCardNumber($event)"
+                 required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label>Expiry Date</label>
+            <input type="text"
+                   name="expiry"
+                   placeholder="MM/YY"
+                   maxlength="5"
+                   (input)="formatExpiry($event)"
+                   required>
+          </div>
+
+          <div class="form-field">
+            <label>CVC</label>
+            <input type="text"
+                   [(ngModel)]="cardCvc"
+                   name="cvc"
+                   placeholder="123"
+                   maxlength="3"
+                   required>
+          </div>
+        </div>
+      </div>
+
+      <div class="payment-footer">
+        <div class="secure-payment">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 2L3 4.5V7.5C3 10.5 5.5 13.16 8 14C10.5 13.16 13 10.5 13 7.5V4.5L8 2Z"
+                  stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          Secure payment powered by Stripe
+        </div>
+
+        <button type="submit" class="btn-pay" [disabled]="loading || !email || !name || !cardNumber">
+          Pay ${{selectedProduct?.price}}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Step 3: Processing -->
+  <div class="modal-content processing-step" *ngIf="currentStep === 'processing'">
+    <div class="processing-animation">
+      <div class="spinner"></div>
+      <h2>Processing Payment</h2>
+      <p>Please wait while we securely process your payment...</p>
+    </div>
+  </div>
+
+  <!-- Step 4: Success -->
+  <div class="modal-content success-step" *ngIf="currentStep === 'success'">
+    <div class="success-header">
+      <div class="success-icon">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="24" fill="#10b981"/>
+          <path d="M34 16L20 30L14 24" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h2>Payment Successful!</h2>
+      <p>Thank you for your purchase</p>
+    </div>
+
+    <div class="receipt-preview">
+      <div class="receipt-header">
+        <h3>Order Summary</h3>
+        <span class="receipt-id">{{receiptData?.id}}</span>
+      </div>
+
+      <div class="receipt-details">
+        <div class="receipt-row">
+          <span>Product</span>
+          <span>{{receiptData?.product.name}} License</span>
+        </div>
+        <div class="receipt-row">
+          <span>Date</span>
+          <span>{{receiptData?.date | date:'short'}}</span>
+        </div>
+        <div class="receipt-row">
+          <span>Payment Method</span>
+          <span>{{receiptData?.paymentMethod}}</span>
+        </div>
+        <div class="receipt-divider"></div>
+        <div class="receipt-row total">
+          <span>Total Paid</span>
+          <span>${{receiptData?.total}}</span>
+        </div>
+      </div>
+
+      <div class="success-actions">
+        <button class="btn-download" (click)="downloadReceipt()">
+          Download Receipt
+        </button>
+        <button class="btn-done" (click)="closeModal()">
+          Done
+        </button>
+      </div>
+    </div>
+
+    <p class="success-note">
+      A confirmation email has been sent to {{receiptData?.email}}
+    </p>
+  </div>
+</div>
