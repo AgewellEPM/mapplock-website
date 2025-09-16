@@ -23,6 +23,32 @@
     <div class="particle"></div>
   </div>
 
+  <!-- Magical Floating Particles -->
+  <div class="magical-particles">
+    <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 20%; animation-delay: 1s;"></div>
+    <div class="particle" style="left: 30%; animation-delay: 2s;"></div>
+    <div class="particle" style="left: 40%; animation-delay: 3s;"></div>
+    <div class="particle" style="left: 50%; animation-delay: 4s;"></div>
+    <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
+    <div class="particle" style="left: 70%; animation-delay: 6s;"></div>
+    <div class="particle" style="left: 80%; animation-delay: 7s;"></div>
+    <div class="particle" style="left: 90%; animation-delay: 8s;"></div>
+    <div class="particle" style="left: 95%; animation-delay: 9s;"></div>
+  </div>
+
+  <!-- Magical Sparkles -->
+  <div class="sparkle-container">
+    <div class="sparkle" style="top: 20%; left: 15%; animation-delay: 0s;"></div>
+    <div class="sparkle" style="top: 30%; left: 75%; animation-delay: 0.5s;"></div>
+    <div class="sparkle" style="top: 60%; left: 25%; animation-delay: 1s;"></div>
+    <div class="sparkle" style="top: 80%; left: 85%; animation-delay: 1.5s;"></div>
+    <div class="sparkle" style="top: 40%; left: 50%; animation-delay: 2s;"></div>
+    <div class="sparkle" style="top: 70%; left: 10%; animation-delay: 2.5s;"></div>
+    <div class="sparkle" style="top: 10%; left: 60%; animation-delay: 3s;"></div>
+    <div class="sparkle" style="top: 90%; left: 40%; animation-delay: 3.5s;"></div>
+  </div>
+
   <!-- Glowing Orbs -->
   <div class="orb-container">
     <div class="orb orb-1"></div>
@@ -35,14 +61,14 @@
     <div class="container">
       <div class="hero-wrapper">
         <h2 class="hero-brand">MappLock</h2>
-        <h1 class="hero-title">The Ultimate Mac Application<br>Kiosk & Lock System.</h1>
-        <p class="hero-subtitle">MappLock lets you lock any Mac application into secure kiosk mode. Perfect for classrooms, exhibitions, and public displays. Lock down browsers during exams, secure trade show demos, and control museum kiosks from your menu bar.</p>
+        <h1 class="hero-title magical-text">The Ultimate Kiosk & Lock System<br>for Mac & iOS.</h1>
+        <p class="hero-subtitle">MappLock lets you lock any Mac or iOS application into secure kiosk mode. Perfect for classrooms, exhibitions, and public displays. Lock down browsers during exams, secure trade show demos, and control museum kiosks from your menu bar or mobile device.</p>
 
         <div class="hero-actions">
-          <button class="btn-download" (click)="playDemo()" style="width: 160px !important; height: 46px !important; padding: 14px 32px !important; margin: 0 6px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; font-size: 15px !important; font-weight: 500 !important; border-radius: 10px !important; border: none !important; box-sizing: border-box !important;">
+          <button class="btn-download magical-glow" (click)="playDemo()" style="width: 160px !important; height: 46px !important; padding: 14px 32px !important; margin: 0 6px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; font-size: 15px !important; font-weight: 500 !important; border-radius: 10px !important; border: none !important; box-sizing: border-box !important;">
             Watch Video
           </button>
-          <button class="btn-buy" (click)="selectPlan('pro')" style="width: 160px !important; height: 46px !important; padding: 14px 32px !important; margin: 0 6px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; font-size: 15px !important; font-weight: 500 !important; border-radius: 10px !important; border: none !important; box-sizing: border-box !important;">
+          <button class="btn-buy magical-glow" (click)="selectPlan('pro')" style="width: 160px !important; height: 46px !important; padding: 14px 32px !important; margin: 0 6px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; font-size: 15px !important; font-weight: 500 !important; border-radius: 10px !important; border: none !important; box-sizing: border-box !important;">
             Buy Now
           </button>
           <button class="btn-education" routerLink="/education" style="width: 160px !important; height: 46px !important; padding: 14px 32px !important; margin: 0 6px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; font-size: 15px !important; font-weight: 500 !important; border-radius: 10px !important; border: 1px solid rgba(255,255,255,0.2) !important; background: transparent !important; color: white !important; box-sizing: border-box !important;">
@@ -51,9 +77,9 @@
         </div>
 
         <div class="hero-meta">
-          <span>Version 2.0</span>
+          <span>Mac v2.0 • iOS v1.0</span>
           <span class="separator">•</span>
-          <span>macOS 12+</span>
+          <span>macOS 12+ • iOS 16.1+</span>
         </div>
       </div>
 
@@ -71,10 +97,110 @@
     <div class="container">
       <h2 class="tagline-text">
         Professional Kiosk Mode for Enterprise & Education.
-        Lock any Mac application into secure kiosk mode.
+        Lock any Mac or iOS application into secure kiosk mode.
         Perfect for classrooms, exhibitions, and public displays
         with complete control.
       </h2>
+    </div>
+  </section>
+
+  <!-- iOS App Section -->
+  <section class="ios-app-section">
+    <div class="container">
+      <div class="ios-content-wrapper">
+        <!-- Left side - iOS App Info -->
+        <div class="ios-app-info">
+          <div class="platform-badge">
+            <span class="platform-icon">📱</span>
+            <span class="platform-text">Now Available on iOS</span>
+          </div>
+
+          <h2 class="ios-title">Beautiful MappLock for iPad & iPhone</h2>
+          <p class="ios-description">
+            Experience the same powerful kiosk functionality on iOS devices with our stunning new app featuring glass morphism UI, haptic feedback, and smooth animations.
+          </p>
+
+          <div class="ios-features">
+            <div class="ios-feature">
+              <span class="feature-icon">🌈</span>
+              <span class="feature-text">Animated gradient backgrounds</span>
+            </div>
+            <div class="ios-feature">
+              <span class="feature-icon">🔮</span>
+              <span class="feature-text">Glass morphism design</span>
+            </div>
+            <div class="ios-feature">
+              <span class="feature-icon">📱</span>
+              <span class="feature-text">Haptic feedback</span>
+            </div>
+            <div class="ios-feature">
+              <span class="feature-icon">🔒</span>
+              <span class="feature-text">Apple Store compliant</span>
+            </div>
+          </div>
+
+          <div class="ios-buttons">
+            <a href="https://github.com/AgewellEPM/MappLock-iOS" target="_blank" class="btn-ios-download">
+              <span class="download-icon">⬇️</span>
+              Download Source Code
+            </a>
+            <button class="btn-ios-demo" (click)="playIOSDemo()">
+              View iOS Demo
+            </button>
+          </div>
+        </div>
+
+        <!-- Right side - iOS Screenshots -->
+        <div class="ios-screenshots">
+          <div class="iphone-mockup floating-card">
+            <div class="iphone-frame magical-glow">
+              <div class="iphone-screen">
+                <div class="ios-app-preview">
+                  <div class="ios-header">
+                    <div class="gradient-orb"></div>
+                    <h3>MappLock</h3>
+                    <p>Focus Mode for iOS</p>
+                  </div>
+                  <div class="ios-session-card">
+                    <div class="session-status">
+                      <div class="status-indicator active"></div>
+                      <span>Session Active</span>
+                      <span class="time">25:30</span>
+                    </div>
+                    <div class="progress-bar">
+                      <div class="progress-fill" style="width: 65%"></div>
+                    </div>
+                  </div>
+                  <div class="ios-controls">
+                    <button class="ios-btn pause">Pause</button>
+                    <button class="ios-btn stop">End Session</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ipad-mockup floating-card">
+            <div class="ipad-frame magical-glow">
+              <div class="ipad-screen">
+                <div class="ios-app-preview ipad-version">
+                  <div class="ios-mode-selector">
+                    <div class="mode-option active">Focus</div>
+                    <div class="mode-option">Study</div>
+                    <div class="mode-option">Work</div>
+                  </div>
+                  <div class="duration-selector">
+                    <div class="duration-option">30 min</div>
+                    <div class="duration-option active">1 hour</div>
+                    <div class="duration-option">2 hours</div>
+                  </div>
+                  <button class="start-session-btn">Start Session</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -10,7 +10,25 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   templateUrl: './interactive-demo.component.html',
   styleUrls: ['./interactive-demo.component.css', './interactive-demo-animations.css']
 })
-export class InteractiveDemoComponent implements OnInit {
+export class InteractiveDemoComponent implements OnInit, OnDestroy {
+  @ViewChild('demoContainer', { static: false }) demoContainer!: ElementRef;
+  @ViewChild('browserPopup', { static: false }) browserPopup!: ElementRef;
+
+  // Touch and mobile state
+  private touchStartX = 0;
+  private touchStartY = 0;
+  private touchStartTime = 0;
+  private swipeThreshold = 50;
+  private tapThreshold = 200;
+  private lastTap = 0;
+  isMobile = false;
+  isAndroid = false;
+  isIOS = false;
+
+  // Performance optimization
+  private animationFrame: number | null = null;
+  private resizeTimeout: number | null = null;
+  private particles: HTMLElement[] = [];
   // Demo states
   isDemoOpen = false;
   isFullscreen = false;
@@ -150,15 +168,86 @@ export class InteractiveDemoComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
+    // Detect mobile platform
+    this.detectMobile();
+
     // Start with Google
     this.navigateToUrl(this.currentUrl);
 
-    // Add magical particle effects
+    // Add mobile-optimized particle effects
     this.initParticleEffects();
+
+    // Setup mobile touch handlers
+    this.setupTouchHandlers();
+
+    // Setup resize handler
+    this.setupResizeHandler();
+  }
+
+  ngOnDestroy() {
+    // Clean up
+    if (this.animationFrame) {
+      cancelAnimationFrame(this.animationFrame);
+    }
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
+    }
+    this.cleanupParticles();
+  }
+
+  detectMobile() {
+    const userAgent = navigator.userAgent || navigator.vendor;
+    this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+    this.isAndroid = /Android/i.test(userAgent);
+    this.isIOS = /iPhone|iPad|iPod/i.test(userAgent);
+
+    // Add mobile class to body for CSS targeting
+    if (this.isMobile) {
+      document.body.classList.add('mobile-device');
+      if (this.isIOS) document.body.classList.add('ios-device');
+      if (this.isAndroid) document.body.classList.add('android-device');
+    }
+  }
+
+  setupTouchHandlers() {
+    if (!this.isMobile) return;
+
+    // Prevent zoom on double tap
+    document.addEventListener('touchstart', (e) => {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    document.addEventListener('gesturestart', (e) => {
+      e.preventDefault();
+    }, { passive: false });
+  }
+
+  setupResizeHandler() {
+    window.addEventListener('resize', () => {
+      if (this.resizeTimeout) {
+        clearTimeout(this.resizeTimeout);
+      }
+      this.resizeTimeout = window.setTimeout(() => {
+        this.handleResize();
+      }, 250);
+    });
+  }
+
+  handleResize() {
+    // Handle mobile orientation changes and resize events
+    if (this.isMobile && this.isDemoOpen) {
+      // Adjust demo popup height for mobile keyboards
+      const popup = this.browserPopup?.nativeElement;
+      if (popup) {
+        popup.style.height = window.innerHeight + 'px';
+      }
+    }
   }
 
   initParticleEffects() {
-    // Create floating particles when demo is opened
+    // Create floating particles when demo is opened (reduced on mobile)
     if (typeof document !== 'undefined') {
       setTimeout(() => {
         this.createFloatingParticles();
@@ -170,83 +259,139 @@ export class InteractiveDemoComponent implements OnInit {
     const container = document.querySelector('.demo-container');
     if (!container) return;
 
-    for (let i = 0; i < 5; i++) {
+    // Reduce particles on mobile for better performance
+    const particleCount = this.isMobile ? 3 : 5;
+
+    for (let i = 0; i < particleCount; i++) {
       const particle = document.createElement('div');
       particle.className = 'floating-particle';
       particle.style.cssText = `
         position: absolute;
-        width: 4px;
-        height: 4px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        width: ${this.isMobile ? '3px' : '4px'};
+        height: ${this.isMobile ? '3px' : '4px'};
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
         border-radius: 50%;
         pointer-events: none;
         left: ${Math.random() * 100}%;
         top: ${Math.random() * 100}%;
         animation: particleDrift ${10 + Math.random() * 10}s linear infinite;
-        opacity: ${0.3 + Math.random() * 0.7};
+        opacity: ${0.3 + Math.random() * 0.4};
+        will-change: transform;
       `;
       container.appendChild(particle);
+      this.particles.push(particle);
 
       // Remove particle after animation
-      setTimeout(() => particle.remove(), 20000);
+      setTimeout(() => {
+        if (particle.parentNode) {
+          particle.parentNode.removeChild(particle);
+        }
+        const index = this.particles.indexOf(particle);
+        if (index > -1) {
+          this.particles.splice(index, 1);
+        }
+      }, 20000);
     }
+  }
+
+  cleanupParticles() {
+    this.particles.forEach(particle => {
+      if (particle.parentNode) {
+        particle.parentNode.removeChild(particle);
+      }
+    });
+    this.particles = [];
   }
 
   // Open the demo popup
   openDemo() {
     this.isDemoOpen = true;
-    this.lockMessage = '✨ Try pressing ⌘L to lock this browser!';
 
-    // Play opening sound
+    // Mobile-specific message
+    if (this.isMobile) {
+      this.lockMessage = '📱 Tap the Lock button to secure this browser!';
+    } else {
+      this.lockMessage = '✨ Try pressing ⌘L to lock this browser!';
+    }
+
+    // Play opening sound (reduced volume on mobile)
     this.playSound('open');
 
-    // Add opening animation class
+    // Add opening animation class with mobile optimization
     const popup = document.querySelector('.demo-browser-popup');
     if (popup) {
       popup.classList.add('opening');
-      setTimeout(() => popup.classList.remove('opening'), 600);
+      // Faster animation on mobile
+      setTimeout(() => popup.classList.remove('opening'), this.isMobile ? 400 : 600);
+
+      // Set mobile-specific styles
+      if (this.isMobile) {
+        (popup as HTMLElement).style.height = window.innerHeight + 'px';
+      }
     }
 
-    // Auto-show lock hint after 3 seconds
+    // Auto-show lock hint after 3 seconds (longer on mobile)
     setTimeout(() => {
       if (!this.isLocked && this.isDemoOpen) {
         this.showLockHint();
       }
-    }, 3000);
+    }, this.isMobile ? 4000 : 3000);
 
-    // Create celebration particles
+    // Create celebration particles (reduced on mobile)
     this.createCelebrationParticles();
+
+    // Prevent body scroll on mobile
+    if (this.isMobile) {
+      document.body.style.overflow = 'hidden';
+    }
   }
 
   createCelebrationParticles() {
-    const colors = ['#667eea', '#764ba2', '#ff6b6b', '#4ecdc4', '#ffd93d'];
+    const colors = ['#3b82f6', '#1d4ed8', '#60a5fa', '#2563eb', '#1e40af'];
     const popup = document.querySelector('.demo-browser-popup');
     if (!popup) return;
 
-    for (let i = 0; i < 20; i++) {
+    // Reduce particles on mobile for better performance
+    const particleCount = this.isMobile ? 12 : 20;
+    const delay = this.isMobile ? 40 : 30;
+
+    for (let i = 0; i < particleCount; i++) {
       setTimeout(() => {
         const particle = document.createElement('div');
         particle.style.cssText = `
           position: absolute;
-          width: 8px;
-          height: 8px;
+          width: ${this.isMobile ? '6px' : '8px'};
+          height: ${this.isMobile ? '6px' : '8px'};
           background: ${colors[Math.floor(Math.random() * colors.length)]};
           border-radius: 50%;
           left: 50%;
           top: 50%;
           pointer-events: none;
           z-index: 10000;
-          animation: celebrationBurst 1s ease-out forwards;
-          --tx: ${(Math.random() - 0.5) * 200}px;
-          --ty: ${(Math.random() - 0.5) * 200}px;
+          animation: celebrationBurst ${this.isMobile ? '0.8s' : '1s'} ease-out forwards;
+          will-change: transform;
+          --tx: ${(Math.random() - 0.5) * (this.isMobile ? 150 : 200)}px;
+          --ty: ${(Math.random() - 0.5) * (this.isMobile ? 150 : 200)}px;
         `;
         popup.appendChild(particle);
-        setTimeout(() => particle.remove(), 1000);
-      }, i * 30);
+        this.particles.push(particle);
+        setTimeout(() => {
+          if (particle.parentNode) {
+            particle.parentNode.removeChild(particle);
+          }
+          const index = this.particles.indexOf(particle);
+          if (index > -1) {
+            this.particles.splice(index, 1);
+          }
+        }, this.isMobile ? 800 : 1000);
+      }, i * delay);
     }
   }
 
   playSound(type: string) {
+    // Disable sounds on mobile by default (can be annoying)
+    if (this.isMobile) return;
+
     const sounds: any = {
       open: 'data:audio/wav;base64,UklGRlQFAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YTAFAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA',
       click: 'data:audio/wav;base64,UklGRhQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAAA',
@@ -256,7 +401,7 @@ export class InteractiveDemoComponent implements OnInit {
 
     try {
       const audio = new Audio(sounds[type] || sounds.click);
-      audio.volume = 0.2;
+      audio.volume = 0.1; // Reduced volume
       audio.play().catch(() => {});
     } catch (e) {}
   }
@@ -268,6 +413,14 @@ export class InteractiveDemoComponent implements OnInit {
     this.isLocked = false;
     this.unlockPin = '';
     this.showUnlockPrompt = false;
+
+    // Restore body scroll on mobile
+    if (this.isMobile) {
+      document.body.style.overflow = '';
+    }
+
+    // Clean up particles
+    this.cleanupParticles();
   }
 
   // Toggle fullscreen mode
@@ -519,13 +672,23 @@ export class InteractiveDemoComponent implements OnInit {
 
   lockBrowser() {
     this.isLocked = true;
-    this.lockMessage = '🔒 Browser is now locked in kiosk mode!';
+
+    if (this.isMobile) {
+      this.lockMessage = '🔒 Browser locked! Tap unlock button or swipe up from bottom.';
+    } else {
+      this.lockMessage = '🔒 Browser is now locked in kiosk mode!';
+    }
 
     // Simulate lock effects
     this.disableInteractions();
 
     // Play lock sound effect (optional)
     this.playLockSound();
+
+    // Add haptic feedback on mobile
+    if (this.isMobile && 'vibrate' in navigator) {
+      navigator.vibrate([100, 50, 100]);
+    }
   }
 
   disableInteractions() {
@@ -541,7 +704,11 @@ export class InteractiveDemoComponent implements OnInit {
   }
 
   showLockHint() {
-    this.lockMessage = '💡 Press ⌘L (Mac) or Ctrl+L (PC) to lock the browser';
+    if (this.isMobile) {
+      this.lockMessage = '💡 Tap the Lock button in the toolbar to secure the browser';
+    } else {
+      this.lockMessage = '💡 Press ⌘L (Mac) or Ctrl+L (PC) to lock the browser';
+    }
   }
 
   attemptUnlock() {
@@ -570,8 +737,17 @@ export class InteractiveDemoComponent implements OnInit {
     this.wrongPinAttempts = 0;
     this.lockMessage = '✅ Browser unlocked successfully!';
 
+    // Add haptic feedback on mobile
+    if (this.isMobile && 'vibrate' in navigator) {
+      navigator.vibrate(200);
+    }
+
     setTimeout(() => {
-      this.lockMessage = '✨ Try locking again with ⌘L';
+      if (this.isMobile) {
+        this.lockMessage = '✨ Tap Lock button to try again';
+      } else {
+        this.lockMessage = '✨ Try locking again with ⌘L';
+      }
     }, 2000);
   }
 
@@ -591,6 +767,87 @@ export class InteractiveDemoComponent implements OnInit {
   minimizeDemo() {
     // Could implement minimize to dock/taskbar simulation
     this.isDemoOpen = false;
+  }
+
+  // Touch event handlers for mobile
+  onTouchStart(event: TouchEvent) {
+    if (!this.isMobile) return;
+
+    const touch = event.touches[0];
+    this.touchStartX = touch.clientX;
+    this.touchStartY = touch.clientY;
+    this.touchStartTime = Date.now();
+  }
+
+  onTouchEnd(event: TouchEvent) {
+    if (!this.isMobile) return;
+
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - this.touchStartX;
+    const deltaY = touch.clientY - this.touchStartY;
+    const deltaTime = Date.now() - this.touchStartTime;
+
+    // Handle swipe gestures
+    if (Math.abs(deltaX) > this.swipeThreshold || Math.abs(deltaY) > this.swipeThreshold) {
+      if (deltaTime < 500) { // Quick swipe
+        this.handleSwipe(deltaX, deltaY);
+      }
+    } else if (deltaTime < this.tapThreshold) {
+      // Handle tap
+      this.handleTap(event);
+    }
+  }
+
+  handleSwipe(deltaX: number, deltaY: number) {
+    if (!this.isDemoOpen) return;
+
+    // Swipe down to close demo
+    if (deltaY > this.swipeThreshold) {
+      this.closeDemo();
+    }
+
+    // Swipe left/right for browser navigation
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      if (deltaX > this.swipeThreshold && this.canGoBack) {
+        this.goBack();
+      } else if (deltaX < -this.swipeThreshold && this.canGoForward) {
+        this.goForward();
+      }
+    }
+  }
+
+  handleTap(event: TouchEvent) {
+    const currentTime = Date.now();
+    const tapInterval = currentTime - this.lastTap;
+
+    // Double tap detection
+    if (tapInterval < 300 && tapInterval > 0) {
+      this.handleDoubleTap(event);
+    }
+
+    this.lastTap = currentTime;
+  }
+
+  handleDoubleTap(event: TouchEvent) {
+    // Double tap to lock/unlock on mobile
+    if (!this.isDemoOpen) return;
+
+    if (this.isLocked) {
+      this.showUnlockPrompt = true;
+    } else {
+      this.lockBrowser();
+    }
+  }
+
+  // Mobile-specific lock button
+  mobileLockToggle() {
+    if (!this.isMobile) return;
+
+    if (this.isLocked) {
+      this.showUnlockPrompt = true;
+    } else {
+      this.lockBrowser();
+    }
   }
 
   startLiveDemo() {

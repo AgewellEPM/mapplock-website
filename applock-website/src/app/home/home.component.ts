@@ -402,4 +402,124 @@ This popup blocking is exactly what MappLock prevents in kiosk environments!`);
   contactEducation() {
     window.location.href = 'mailto:education@mapplock.com?subject=Education%20Pricing%20Request';
   }
+
+  playIOSDemo() {
+    // Create popup with iOS app preview
+    const popup = window.open('', 'iosDemo', 'width=800,height=600,scrollbars=no,resizable=no');
+
+    if (popup) {
+      popup.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>MappLock iOS Demo</title>
+          <style>
+            body {
+              margin: 0;
+              padding: 20px;
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              min-height: 100vh;
+            }
+            .demo-container {
+              text-align: center;
+              color: white;
+            }
+            .demo-title {
+              font-size: 32px;
+              font-weight: 700;
+              margin-bottom: 20px;
+            }
+            .demo-description {
+              font-size: 18px;
+              margin-bottom: 30px;
+              opacity: 0.9;
+            }
+            .github-link {
+              display: inline-block;
+              background: rgba(255, 255, 255, 0.2);
+              padding: 16px 32px;
+              border-radius: 12px;
+              color: white;
+              text-decoration: none;
+              font-weight: 600;
+              backdrop-filter: blur(20px);
+              border: 1px solid rgba(255, 255, 255, 0.3);
+              transition: all 0.3s ease;
+            }
+            .github-link:hover {
+              background: rgba(255, 255, 255, 0.3);
+              transform: translateY(-2px);
+            }
+            .features {
+              margin-top: 40px;
+              text-align: left;
+              max-width: 600px;
+            }
+            .feature {
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              margin-bottom: 16px;
+              font-size: 16px;
+            }
+            .feature-icon {
+              font-size: 20px;
+              width: 32px;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="demo-container">
+            <h1 class="demo-title">🎨 Beautiful MappLock for iOS</h1>
+            <p class="demo-description">
+              Experience the same powerful kiosk functionality on iOS with our stunning new app featuring glass morphism UI, haptic feedback, and smooth animations.
+            </p>
+
+            <div class="features">
+              <div class="feature">
+                <span class="feature-icon">🌈</span>
+                <span>Animated gradient backgrounds with glass morphism UI</span>
+              </div>
+              <div class="feature">
+                <span class="feature-icon">📱</span>
+                <span>Haptic feedback and smooth spring animations</span>
+              </div>
+              <div class="feature">
+                <span class="feature-icon">⏱️</span>
+                <span>Session management with progress tracking</span>
+              </div>
+              <div class="feature">
+                <span class="feature-icon">🔒</span>
+                <span>Apple Store compliant kiosk mode integration</span>
+              </div>
+              <div class="feature">
+                <span class="feature-icon">🎯</span>
+                <span>Focus, Study, and Work session modes</span>
+              </div>
+              <div class="feature">
+                <span class="feature-icon">⚙️</span>
+                <span>Customizable duration settings (15min - 2hrs)</span>
+              </div>
+            </div>
+
+            <a href="https://github.com/AgewellEPM/MappLock-iOS" target="_blank" class="github-link">
+              ⬇️ Download Source Code on GitHub
+            </a>
+
+            <p style="margin-top: 30px; font-size: 14px; opacity: 0.7;">
+              Build the app with Xcode and run on your iOS device or simulator
+            </p>
+          </div>
+        </body>
+        </html>
+      `);
+      popup.document.close();
+    } else {
+      alert('Please allow popups to view the iOS demo. The iOS app source code is available at: https://github.com/AgewellEPM/MappLock-iOS');
+    }
+  }
 }

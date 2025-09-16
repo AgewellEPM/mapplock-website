@@ -34,7 +34,7 @@
 .gradient-orb-1 {
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, #6366f1 0%, transparent 70%);
+  background: radial-gradient(circle, #3b82f6 0%, transparent 70%);
   top: -200px;
   left: -200px;
 }
@@ -42,7 +42,7 @@
 .gradient-orb-2 {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+  background: radial-gradient(circle, #60a5fa 0%, transparent 70%);
   bottom: -150px;
   right: -150px;
   animation-delay: -5s;
@@ -51,7 +51,7 @@
 .gradient-orb-3 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, #7c3aed 0%, transparent 70%);
+  background: radial-gradient(circle, #1e40af 0%, transparent 70%);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -118,7 +118,7 @@
 }
 
 .product-card.selected {
-  border-color: #8b5cf6;
+  border-color: #60a5fa;
   background: linear-gradient(135deg,
     rgba(99, 102, 241, 0.15) 0%,
     rgba(139, 92, 246, 0.1) 100%);
@@ -134,7 +134,7 @@
   top: -12px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
   color: white;
   padding: 6px 20px;
   border-radius: 20px;
@@ -206,13 +206,13 @@
 }
 
 .product-card.selected .radio-outer {
-  border-color: #8b5cf6;
+  border-color: #60a5fa;
 }
 
 .radio-inner {
   width: 12px;
   height: 12px;
-  background: #8b5cf6;
+  background: #60a5fa;
   border-radius: 50%;
   animation: scaleIn 0.2s ease;
 }
@@ -270,7 +270,7 @@
 
 .form-input:focus {
   outline: none;
-  border-color: #8b5cf6;
+  border-color: #60a5fa;
   background: rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
 }
@@ -326,7 +326,7 @@
 .btn-pay {
   width: 100%;
   padding: 18px;
-  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
   color: white;
   border: none;
   border-radius: 12px;
@@ -544,7 +544,7 @@
 
 .btn-download-receipt {
   background: rgba(139, 92, 246, 0.1);
-  color: #8b5cf6;
+  color: #60a5fa;
   border: 1px solid rgba(139, 92, 246, 0.2);
 }
 
@@ -553,7 +553,7 @@
 }
 
 .btn-continue {
-  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
   color: white;
 }
 

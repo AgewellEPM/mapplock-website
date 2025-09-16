@@ -504,7 +504,7 @@ body {
   height: 120%;
   background: radial-gradient(circle at center,
     rgba(139, 92, 246, 0.8) 0%,
-    rgba(168, 85, 247, 0.6) 15%,
+    rgba(59, 130, 246, 0.6) 15%,
     rgba(139, 92, 246, 0.4) 30%,
     rgba(88, 28, 135, 0.25) 50%,
     rgba(59, 130, 246, 0.15) 70%,
@@ -524,7 +524,7 @@ body {
   width: 150%;
   height: 150%;
   background: radial-gradient(circle at center,
-    rgba(168, 85, 247, 0.6) 0%,
+    rgba(59, 130, 246, 0.6) 0%,
     rgba(99, 102, 241, 0.5) 20%,
     rgba(59, 130, 246, 0.3) 40%,
     rgba(139, 92, 246, 0.2) 60%,
@@ -544,9 +544,9 @@ body {
   width: 80%;
   height: 80%;
   background: radial-gradient(circle at center,
-    rgba(168, 85, 247, 1) 0%,
+    rgba(59, 130, 246, 1) 0%,
     rgba(139, 92, 246, 0.7) 10%,
-    rgba(168, 85, 247, 0.5) 25%,
+    rgba(59, 130, 246, 0.5) 25%,
     transparent 60%);
   filter: blur(150px);
   z-index: 0;
@@ -887,11 +887,11 @@ body {
   box-shadow:
     0 30px 60px rgba(0, 0, 0, 0.4),
     0 15px 30px rgba(0, 0, 0, 0.3),
-    inset 0 0 0 1px rgba(147, 51, 234, 0.2),
-    inset 0 0 30px rgba(147, 51, 234, 0.05);
+    inset 0 0 0 1px rgba(29, 78, 216, 0.2),
+    inset 0 0 30px rgba(29, 78, 216, 0.05);
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(147, 51, 234, 0.15);
+  border: 1px solid rgba(29, 78, 216, 0.15);
   animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
 }
@@ -1151,11 +1151,11 @@ body {
   box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.3),
     0 10px 20px rgba(0, 0, 0, 0.2),
-    inset 0 0 0 1px rgba(147, 51, 234, 0.2),
-    inset 0 0 20px rgba(147, 51, 234, 0.05);
+    inset 0 0 0 1px rgba(29, 78, 216, 0.2),
+    inset 0 0 20px rgba(29, 78, 216, 0.05);
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(147, 51, 234, 0.15);
+  border: 1px solid rgba(29, 78, 216, 0.15);
   animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -1172,8 +1172,8 @@ body {
   box-shadow:
     0 30px 60px rgba(0, 0, 0, 0.4),
     0 15px 30px rgba(0, 0, 0, 0.3),
-    inset 0 0 0 1px rgba(147, 51, 234, 0.3),
-    inset 0 0 30px rgba(147, 51, 234, 0.08);
+    inset 0 0 0 1px rgba(29, 78, 216, 0.3),
+    inset 0 0 30px rgba(29, 78, 216, 0.08);
 }
 
 /* Top shine for feature cards */
@@ -1689,7 +1689,7 @@ body {
 }
 
 .trust-stats strong {
-  color: #8b5cf6;
+  color: #60a5fa;
   font-weight: 600;
 }
 
@@ -2063,7 +2063,7 @@ body {
 }
 
 .perf-card.gradient-card {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
   border: none;
   position: relative;
   overflow: hidden;
@@ -3325,4 +3325,1210 @@ body {
 .particles-container {
   will-change: transform;
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ===== ENHANCED MOBILE-FIRST RESPONSIVE DESIGN ===== */
+
+/* Main Container Mobile Fixes */
+@media (max-width: 1024px) {
+  .app-container {
+    padding: 0;
+  }
+
+  .hero-section {
+    padding: 60px 20px;
+    min-height: 70vh;
+  }
+
+  .hero-content h1 {
+    font-size: 3rem !important;
+    line-height: 1.1 !important;
+  }
+
+  .hero-description {
+    font-size: 1.1rem !important;
+    max-width: 90% !important;
+  }
+
+  .cta-buttons {
+    flex-direction: column !important;
+    gap: 15px !important;
+    width: 100% !important;
+    max-width: 400px !important;
+  }
+
+  .cta-buttons .cta-button {
+    width: 100% !important;
+    padding: 16px 24px !important;
+    font-size: 1rem !important;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 30px !important;
+    padding: 0 20px !important;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 30px !important;
+  }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .app-container {
+    overflow-x: hidden !important;
+  }
+
+  .hero-section {
+    padding: 40px 16px !important;
+    min-height: 60vh !important;
+    text-align: center !important;
+  }
+
+  .hero-content h1 {
+    font-size: 2.2rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 16px !important;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem !important;
+    margin-bottom: 20px !important;
+  }
+
+  .hero-description {
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    max-width: 100% !important;
+    margin: 0 auto 30px !important;
+  }
+
+  .cta-buttons {
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+    align-items: center !important;
+  }
+
+  .cta-button {
+    width: 100% !important;
+    max-width: 280px !important;
+    padding: 14px 20px !important;
+    font-size: 0.9rem !important;
+  }
+
+  .features-section {
+    padding: 60px 16px !important;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+    padding: 0 !important;
+  }
+
+  .feature-card {
+    padding: 24px 20px !important;
+    text-align: center !important;
+  }
+
+  .feature-icon {
+    font-size: 2.5rem !important;
+    margin-bottom: 12px !important;
+  }
+
+  .feature-title {
+    font-size: 1.2rem !important;
+    margin-bottom: 8px !important;
+  }
+
+  .feature-description {
+    font-size: 0.85rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .testimonials-section {
+    padding: 60px 16px !important;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .testimonial-card {
+    padding: 20px !important;
+    text-align: center !important;
+  }
+
+  .testimonial-text {
+    font-size: 0.9rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 16px !important;
+  }
+
+  .testimonial-author {
+    font-size: 0.8rem !important;
+  }
+
+  .pricing-section {
+    padding: 60px 16px !important;
+  }
+
+  .pricing-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .pricing-card {
+    padding: 24px 20px !important;
+    max-width: 100% !important;
+  }
+
+  .price {
+    font-size: 2rem !important;
+  }
+
+  .pricing-features {
+    margin: 20px 0 !important;
+  }
+
+  .pricing-features li {
+    font-size: 0.85rem !important;
+    padding: 8px 0 !important;
+  }
+
+  .faq-section {
+    padding: 60px 16px !important;
+  }
+
+  .faq-item {
+    margin-bottom: 16px !important;
+  }
+
+  .faq-question {
+    font-size: 1rem !important;
+    padding: 16px 20px !important;
+  }
+
+  .faq-answer {
+    font-size: 0.9rem !important;
+    padding: 16px 20px !important;
+    line-height: 1.4 !important;
+  }
+
+  .cta-section {
+    padding: 60px 16px !important;
+    text-align: center !important;
+  }
+
+  .cta-section h2 {
+    font-size: 1.8rem !important;
+    margin-bottom: 16px !important;
+  }
+
+  .cta-section p {
+    font-size: 0.95rem !important;
+    margin-bottom: 24px !important;
+  }
+}
+
+/* Small Mobile Optimizations */
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 30px 12px !important;
+    min-height: 50vh !important;
+  }
+
+  .hero-content h1 {
+    font-size: 1.8rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem !important;
+    margin-bottom: 16px !important;
+  }
+
+  .hero-description {
+    font-size: 0.85rem !important;
+    margin-bottom: 24px !important;
+  }
+
+  .cta-button {
+    max-width: 100% !important;
+    padding: 12px 16px !important;
+    font-size: 0.85rem !important;
+  }
+
+  .features-section,
+  .testimonials-section,
+  .pricing-section,
+  .faq-section,
+  .cta-section {
+    padding: 40px 12px !important;
+  }
+
+  .feature-card,
+  .testimonial-card,
+  .pricing-card {
+    padding: 20px 16px !important;
+  }
+
+  .feature-icon {
+    font-size: 2rem !important;
+  }
+
+  .feature-title {
+    font-size: 1.1rem !important;
+  }
+
+  .feature-description {
+    font-size: 0.8rem !important;
+  }
+
+  .price {
+    font-size: 1.6rem !important;
+  }
+
+  .faq-question,
+  .faq-answer {
+    padding: 12px 16px !important;
+  }
+
+  .cta-section h2 {
+    font-size: 1.5rem !important;
+  }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 375px) {
+  .hero-content h1 {
+    font-size: 1.6rem !important;
+  }
+
+  .hero-description {
+    font-size: 0.8rem !important;
+  }
+
+  .cta-button {
+    padding: 10px 14px !important;
+    font-size: 0.8rem !important;
+  }
+
+  .features-section,
+  .testimonials-section,
+  .pricing-section,
+  .faq-section,
+  .cta-section {
+    padding: 32px 8px !important;
+  }
+
+  .feature-card,
+  .testimonial-card,
+  .pricing-card {
+    padding: 16px 12px !important;
+  }
+
+  .feature-icon {
+    font-size: 1.8rem !important;
+  }
+
+  .feature-title {
+    font-size: 1rem !important;
+  }
+
+  .price {
+    font-size: 1.4rem !important;
+  }
+}
+
+
+/* iOS App Section Styles */
+.ios-app-section {
+  padding: 120px 0;
+  background: linear-gradient(135deg,
+    rgba(74, 144, 226, 0.03) 0%,
+    rgba(155, 81, 224, 0.03) 25%,
+    rgba(255, 105, 180, 0.03) 50%,
+    rgba(74, 144, 226, 0.03) 75%,
+    rgba(155, 81, 224, 0.03) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.ios-app-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(155, 81, 224, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.ios-content-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.ios-app-info {
+  padding-left: 40px;
+}
+
+.platform-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  padding: 12px 24px;
+  margin-bottom: 32px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.platform-icon {
+  font-size: 18px;
+}
+
+.platform-text {
+  background: linear-gradient(135deg, #4a90e2, #9b51e0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ios-title {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, #ffffff, #e1e5f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ios-description {
+  font-size: 18px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 40px;
+}
+
+.ios-features {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.ios-feature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0;
+}
+
+.feature-icon {
+  font-size: 20px;
+  width: 32px;
+  text-align: center;
+}
+
+.feature-text {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.ios-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-ios-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #4a90e2, #9b51e0);
+  color: white;
+  text-decoration: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
+}
+
+.btn-ios-download:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(74, 144, 226, 0.4);
+  text-decoration: none;
+  color: white;
+}
+
+.download-icon {
+  font-size: 18px;
+}
+
+.btn-ios-demo {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-ios-demo:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.ios-screenshots {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  justify-content: center;
+  position: relative;
+}
+
+.iphone-mockup, .ipad-mockup {
+  position: relative;
+}
+
+.iphone-frame {
+  width: 280px;
+  height: 580px;
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  border-radius: 50px;
+  padding: 20px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.iphone-frame::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 6px;
+  background: #333;
+  border-radius: 3px;
+}
+
+.iphone-screen {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 35px;
+  overflow: hidden;
+  position: relative;
+}
+
+.ipad-frame {
+  width: 320px;
+  height: 420px;
+  background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  border-radius: 30px;
+  padding: 15px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  transform: scale(0.85) translateY(40px);
+}
+
+.ipad-screen {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.ios-app-preview {
+  padding: 40px 30px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ios-header {
+  text-align: center;
+  color: white;
+  margin-bottom: 30px;
+}
+
+.gradient-orb {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.ios-header h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.ios-header p {
+  font-size: 16px;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.ios-session-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.session-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  margin-bottom: 16px;
+}
+
+.status-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #888;
+}
+
+.status-indicator.active {
+  background: #4ade80;
+  box-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.time {
+  font-family: 'SF Mono', monospace;
+  font-weight: 600;
+}
+
+.progress-bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4ade80, #06d6a0);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.ios-controls {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.ios-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ios-btn.pause {
+  background: rgba(249, 115, 22, 0.9);
+  color: white;
+}
+
+.ios-btn.stop {
+  background: rgba(239, 68, 68, 0.9);
+  color: white;
+}
+
+.ios-mode-selector, .duration-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.mode-option, .duration-option {
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mode-option.active, .duration-option.active {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.start-session-btn {
+  background: linear-gradient(135deg, #4ade80, #06d6a0);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: auto;
+}
+
+.start-session-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(74, 222, 128, 0.3);
+}
+
+/* iOS Responsive Design */
+@media (max-width: 1200px) {
+  .ios-content-wrapper {
+    gap: 60px;
+  }
+
+  .ios-title {
+    font-size: 42px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ios-content-wrapper {
+    grid-template-columns: 1fr;
+    gap: 60px;
+    text-align: center;
+  }
+
+  .ios-app-info {
+    padding-left: 0;
+  }
+
+  .ios-title {
+    font-size: 36px;
+  }
+
+  .ios-screenshots {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .iphone-frame {
+    width: 240px;
+    height: 500px;
+  }
+
+  .ipad-frame {
+    width: 280px;
+    height: 380px;
+  }
+}
+
+/* ============================================ */
+/*              DARK THEME BASE                 */
+/* ============================================ */
+
+/* Global Dark Background */
+body, html {
+  background: #0a0a0f !important;
+  color: #ffffff !important;
+}
+
+.app-container {
+  background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%) !important;
+  min-height: 100vh;
+}
+
+/* Dark Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, #0a0a0f 0%, #16213e 25%, #1a1a2e 50%, #0f3460 100%) !important;
+}
+
+/* Dark Feature Sections */
+.features-section,
+.testimonials-section,
+.performance-section,
+.ios-app-section,
+.tagline-section {
+  background: #0a0a0f !important;
+}
+
+/* Dark Cards and Elements */
+.feature-card,
+.testimonial-card,
+.perf-card,
+.pricing-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Dark Button Styles */
+.btn-download,
+.btn-buy,
+.btn-education,
+.cta-button {
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.8) 0%, rgba(168, 85, 247, 0.6) 100%) !important;
+  border: 1px solid rgba(147, 51, 234, 0.3) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 15px rgba(147, 51, 234, 0.3) !important;
+}
+
+.btn-download:hover,
+.btn-buy:hover,
+.btn-education:hover,
+.cta-button:hover {
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.9) 0%, rgba(168, 85, 247, 0.7) 100%) !important;
+  border-color: rgba(147, 51, 234, 0.5) !important;
+  box-shadow: 0 6px 20px rgba(147, 51, 234, 0.4) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Dark Navigation */
+.navigation-container {
+  background: rgba(10, 10, 15, 0.95) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+}
+
+/* Dark Text Elements */
+.hero-title,
+.hero-subtitle,
+.section-title,
+.feature-title {
+  color: #ffffff !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Dark iOS Section */
+.ios-app-section {
+  background: linear-gradient(135deg, #0a0a0f 0%, #16213e 50%, #1a1a2e 100%) !important;
+}
+
+/* Enhance existing dark elements */
+.iphone-frame,
+.ipad-frame {
+  background: linear-gradient(135deg, #1a1a2e, #0f3460) !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Dark glassmorphism updates */
+.sensei-glass-card,
+.sensei-glass-card-split {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ============================================ */
+/*           MAGICAL ENHANCEMENTS               */
+/* ============================================ */
+
+/* Magical Floating Particles */
+.magical-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, rgba(147, 51, 234, 0.8), transparent);
+  border-radius: 50%;
+  animation: floatParticle 10s infinite linear;
+}
+
+@keyframes floatParticle {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Magical Sparkle Effects */
+.sparkle-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(45deg, #fff, #a855f7);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  animation: sparkleAnimation 2s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes sparkleAnimation {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(180deg);
+  }
+}
+
+/* Magical Glow Effects on Hover */
+.magical-glow {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.magical-glow:hover {
+  box-shadow:
+    0 0 20px rgba(147, 51, 234, 0.4),
+    0 0 40px rgba(168, 85, 247, 0.3),
+    0 0 60px rgba(196, 181, 253, 0.2);
+  transform: translateY(-2px);
+}
+
+.magical-glow::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #9333ea, #a855f7, #c084fc, #e879f9);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.magical-glow:hover::before {
+  opacity: 0.3;
+  animation: magicalPulse 2s infinite;
+}
+
+@keyframes magicalPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.02);
+  }
+}
+
+/* Enhanced Hero Section with Magic */
+.hero-section {
+  position: relative;
+}
+
+.hero-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 80%, rgba(147, 51, 234, 0.1), transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.1), transparent 50%);
+  pointer-events: none;
+  animation: magicalAura 8s infinite alternate;
+}
+
+@keyframes magicalAura {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Floating Animation for Cards */
+.floating-card {
+  animation: floatingAnimation 6s ease-in-out infinite;
+}
+
+@keyframes floatingAnimation {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Magical Button Enhancements */
+.cta-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s;
+}
+
+.cta-button:hover::after {
+  left: 100%;
+}
+
+/* Enhanced Feature Cards with Magical Micro-Interactions */
+.feature-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.feature-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.1),
+    0 0 30px rgba(147, 51, 234, 0.2);
+}
+
+/* Magical Text Glow */
+.magical-text {
+  background: linear-gradient(45deg, #9333ea, #a855f7, #c084fc);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShimmer 3s infinite linear;
+}
+
+@keyframes textShimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Stagger animations for elements */
+.stagger-animation {
+  animation: fadeInUp 0.8s ease forwards;
+  opacity: 0;
+}
+
+@keyframes magicalFadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced iOS App Section with Magical Effects */
+.ios-app-section {
+  position: relative;
+}
+
+.ios-app-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 30% 70%, rgba(74, 144, 226, 0.15), transparent 60%),
+    radial-gradient(circle at 70% 30%, rgba(155, 81, 224, 0.15), transparent 60%);
+  pointer-events: none;
+  animation: magicalSwirl 12s infinite ease-in-out;
+}
+
+@keyframes magicalSwirl {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+    opacity: 1;
+  }
+}
+
+/* Magical Device Mockup Enhancements */
+.iphone-frame, .ipad-frame {
+  position: relative;
+}
+
+.iphone-frame::before, .ipad-frame::before {
+  box-shadow:
+    0 0 20px rgba(147, 51, 234, 0.2),
+    0 25px 60px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.iphone-mockup:hover .iphone-frame,
+.ipad-mockup:hover .ipad-frame {
+  transform: scale(1.05);
+  box-shadow:
+    0 0 40px rgba(147, 51, 234, 0.4),
+    0 35px 80px rgba(0, 0, 0, 0.4);
+}
+
+.iphone-mockup:hover .iphone-frame::before,
+.ipad-mockup:hover .ipad-frame::before {
+  animation: magicalGlow 2s infinite;
+}
+
+@keyframes magicalGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 20px rgba(147, 51, 234, 0.2),
+      0 25px 60px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 40px rgba(147, 51, 234, 0.6),
+      0 35px 80px rgba(168, 85, 247, 0.3);
+  }
+}
+
+/* Magical Progress Bar Animation */
+.progress-fill {
+  background: linear-gradient(90deg, #4ade80, #06d6a0, #9333ea);
+  animation: magicalProgress 3s infinite ease-in-out;
+}
+
+@keyframes magicalProgress {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Magical Status Indicator */
+.status-indicator.active {
+  box-shadow:
+    0 0 10px rgba(74, 222, 128, 0.5),
+    0 0 20px rgba(147, 51, 234, 0.3);
+  animation: magicalPulse 2s infinite;
+}
+
+/* Enhanced Testimonial Cards */
+.testimonial-card:hover {
+  box-shadow:
+    0 20px 40px rgba(139, 92, 246, 0.15),
+    0 0 30px rgba(147, 51, 234, 0.2);
+  transform: translateY(-5px) scale(1.02);
+}
+
+/* Magical Performance Cards */
+.perf-card:hover {
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(88, 28, 135, 0.15),
+    0 0 60px rgba(147, 51, 234, 0.3),
+    inset 0 0 20px rgba(255, 255, 255, 0.03);
+}
+
+/* Magical Cursor Trail (Optional Enhancement) */
+.magical-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(147, 51, 234, 0.6), transparent);
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease;
+}
+
+/* Responsive Magical Enhancements */
+@media (max-width: 768px) {
+  .particle {
+    width: 2px;
+    height: 2px;
+  }
+
+  .sparkle {
+    width: 4px;
+    height: 4px;
+  }
+
+  .magical-glow:hover {
+    box-shadow:
+      0 0 15px rgba(147, 51, 234, 0.3),
+      0 0 30px rgba(168, 85, 247, 0.2);
+  }
+}
+
+@media (max-width: 480px) {
+  .particle {
+    width: 1px;
+    height: 1px;
+  }
+
+  .sparkle {
+    width: 3px;
+    height: 3px;
+  }
+
+  .magical-glow:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 0 10px rgba(147, 51, 234, 0.2),
+      0 0 20px rgba(168, 85, 247, 0.1);
+  }
 }

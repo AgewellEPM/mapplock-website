@@ -56,12 +56,12 @@ app-chatbot {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #3b82f6, #a855f7);
+  background: linear-gradient(135deg, #3b82f6, #3b82f6);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #2563eb, #9333ea);
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
 }
 
 /* Loading State for Lazy Components */

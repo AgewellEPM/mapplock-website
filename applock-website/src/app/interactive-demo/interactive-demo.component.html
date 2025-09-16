@@ -1,4 +1,4 @@
-<div class="demo-container">
+<div class="demo-container" #demoContainer>
   <!-- Demo Header Section -->
   <div class="demo-header">
     <h2 class="demo-title">
@@ -22,8 +22,12 @@
   <div class="demo-popup-overlay" *ngIf="isDemoOpen" (click)="closeDemo()">
     <div class="demo-browser-popup"
          [class.fullscreen]="isFullscreen"
+         [class.mobile]="isMobile"
          id="demo-browser"
-         (click)="$event.stopPropagation()">
+         #browserPopup
+         (click)="$event.stopPropagation()"
+         (touchstart)="onTouchStart($event)"
+         (touchend)="onTouchEnd($event)">
 
       <!-- Window Controls -->
       <div class="window-controls">
@@ -58,7 +62,15 @@
                  [(ngModel)]="currentUrl"
                  [disabled]="isLocked"
                  (keyup.enter)="handleUrlSubmit()"
-                 placeholder="Enter URL or search...">
+                 [placeholder]="isMobile ? 'Search or type URL' : 'Enter URL or search...'">
+
+          <!-- Mobile Lock Button -->
+          <button class="mobile-lock-btn"
+                  *ngIf="isMobile"
+                  (click)="mobileLockToggle()"
+                  [class.locked]="isLocked">
+            {{ isLocked ? '🔓' : '🔒' }}
+          </button>
         </div>
 
         <div class="status-message">
@@ -377,14 +389,15 @@
             </div>
 
             <div class="unlock-hint">
-              Press <kbd>⌘⌥U</kbd> to unlock
+              <span *ngIf="!isMobile">Press <kbd>⌘⌥U</kbd> to unlock</span>
+              <span *ngIf="isMobile">Double-tap or use unlock button to unlock</span>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Keyboard Shortcuts Help -->
-      <div class="shortcuts-help" *ngIf="!isLocked">
+      <div class="shortcuts-help" *ngIf="!isLocked && !isMobile">
         <div class="shortcut">
           <kbd>⌘L</kbd> Lock Browser
         </div>
@@ -393,6 +406,19 @@
         </div>
         <div class="shortcut">
           <kbd>ESC</kbd> Close Demo
+        </div>
+      </div>
+
+      <!-- Mobile Instructions -->
+      <div class="mobile-instructions" *ngIf="!isLocked && isMobile">
+        <div class="mobile-tip">
+          💡 Double-tap to lock/unlock
+        </div>
+        <div class="mobile-tip">
+          👆 Swipe down to close
+        </div>
+        <div class="mobile-tip">
+          ← → Swipe to navigate
         </div>
       </div>
     </div>
@@ -408,10 +434,11 @@
         <input type="password"
                [(ngModel)]="unlockPin"
                (keyup)="handlePinKeypress($event)"
-               placeholder="Enter PIN..."
+               [placeholder]="isMobile ? 'PIN' : 'Enter PIN...'"
                maxlength="4"
                class="pin-input"
-               autofocus>
+               [class.mobile]="isMobile"
+               [autofocus]="!isMobile">
       </div>
 
       <div class="unlock-actions">

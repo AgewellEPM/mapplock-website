@@ -35,8 +35,8 @@
   background: linear-gradient(90deg,
     transparent 0%,
     rgba(59, 130, 246, 0.5) 25%,
-    rgba(168, 85, 247, 0.5) 50%,
-    rgba(236, 72, 153, 0.5) 75%,
+    rgba(59, 130, 246, 0.5) 50%,
+    rgba(29, 78, 216, 0.5) 75%,
     transparent 100%);
 }
 
@@ -92,7 +92,7 @@
 
 .brand-icon {
   font-size: 28px;
-  background: linear-gradient(135deg, #3b82f6, #a855f7);
+  background: linear-gradient(135deg, #3b82f6, #3b82f6);
   border-radius: 8px;
   padding: 8px;
   display: flex;
@@ -103,7 +103,7 @@
 .brand-name {
   font-size: 24px;
   font-weight: 700;
-  background: linear-gradient(135deg, #3b82f6, #a855f7);
+  background: linear-gradient(135deg, #3b82f6, #3b82f6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -210,7 +210,7 @@
   align-items: center;
   padding: 40px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
   border-radius: 16px;
   margin: 40px 0;
   padding: 40px;
@@ -252,7 +252,7 @@
 }
 
 .cta-btn.primary {
-  background: linear-gradient(135deg, #3b82f6, #a855f7);
+  background: linear-gradient(135deg, #3b82f6, #3b82f6);
   color: white;
 }
 
@@ -410,8 +410,8 @@
 }
 
 .badge.apple {
-  border-color: rgba(168, 85, 247, 0.3);
-  background: rgba(168, 85, 247, 0.05);
+  border-color: rgba(59, 130, 246, 0.3);
+  background: rgba(59, 130, 246, 0.05);
 }
 
 .badge.secure {
@@ -463,62 +463,183 @@
 
 @media (max-width: 768px) {
   .footer-container {
-    padding: 0 16px;
+    padding: 0 16px !important;
   }
 
   .footer-main {
-    padding: 60px 0 40px;
+    padding: 40px 0 30px !important;
+    gap: 30px !important;
   }
 
   .footer-links {
-    grid-template-columns: 1fr;
-    gap: 20px;
+    grid-template-columns: 1fr !important;
+    gap: 25px !important;
   }
 
   .footer-bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    padding: 30px 0 !important;
   }
 
   .footer-legal {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
   }
 
   .footer-badges {
-    justify-content: flex-start;
+    justify-content: flex-start !important;
   }
 
   .cta-actions {
-    flex-direction: column;
-    width: 100%;
+    flex-direction: column !important;
+    width: 100% !important;
   }
 
   .cta-btn {
-    width: 100%;
+    width: 100% !important;
+  }
+
+  .footer-cta {
+    padding: 30px 20px !important;
+    margin: 30px 0 !important;
+  }
+
+  .newsletter-section {
+    padding: 30px 0 !important;
+  }
+
+  .brand-tagline {
+    font-size: 14px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .group-title {
+    font-size: 15px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .footer-link {
+    font-size: 13px !important;
   }
 }
 
 @media (max-width: 480px) {
+  .footer-container {
+    padding: 0 12px !important;
+  }
+
+  .footer-main {
+    padding: 30px 0 25px !important;
+  }
+
   .brand-logo {
-    flex-direction: column;
-    text-align: center;
-    gap: 8px;
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 8px !important;
   }
 
   .brand-meta {
-    justify-content: center;
+    justify-content: center !important;
   }
 
   .social-links {
-    gap: 12px;
+    gap: 12px !important;
   }
 
   .social-link {
-    flex-direction: column;
-    text-align: center;
-    gap: 4px;
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 4px !important;
+  }
+
+  .footer-cta {
+    padding: 25px 16px !important;
+    margin: 25px 0 !important;
+  }
+
+  .cta-title {
+    font-size: 18px !important;
+  }
+
+  .cta-subtitle {
+    font-size: 13px !important;
+  }
+
+  .newsletter-title {
+    font-size: 16px !important;
+  }
+
+  .newsletter-subtitle {
+    font-size: 13px !important;
+  }
+
+  .newsletter-input {
+    padding: 14px 16px !important;
+    font-size: 13px !important;
+  }
+
+  .newsletter-btn {
+    padding: 14px 20px !important;
+    font-size: 13px !important;
+  }
+
+  .footer-bottom {
+    padding: 25px 0 !important;
+  }
+
+  .brand-name {
+    font-size: 20px !important;
+  }
+
+  .brand-icon {
+    font-size: 24px !important;
+    padding: 6px !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .footer-container {
+    padding: 0 10px !important;
+  }
+
+  .footer-main {
+    padding: 25px 0 20px !important;
+  }
+
+  .footer-cta {
+    padding: 20px 12px !important;
+    margin: 20px 0 !important;
+  }
+
+  .brand-name {
+    font-size: 18px !important;
+  }
+
+  .brand-tagline {
+    font-size: 13px !important;
+  }
+
+  .group-title {
+    font-size: 14px !important;
+  }
+
+  .footer-link {
+    font-size: 12px !important;
+  }
+
+  .badge {
+    padding: 4px 8px !important;
+    font-size: 11px !important;
+  }
+
+  .legal-link {
+    font-size: 11px !important;
+  }
+
+  .copyright {
+    font-size: 12px !important;
   }
 }
