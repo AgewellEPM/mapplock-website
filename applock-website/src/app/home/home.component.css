@@ -4858,39 +4858,100 @@ body, html {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .screenshot-card {
+    gap: 50px;
+    padding: 0 30px;
+  }
+
+  .feature-breakdown,
+  .use-case-examples {
+    padding: 0 30px;
+  }
+}
+
 @media (max-width: 768px) {
   .screenshot-gallery-section {
-    padding: 80px 0;
+    padding: 60px 0;
+  }
+
+  .section-header {
+    margin-bottom: 60px;
   }
 
   .gallery-title {
-    font-size: 36px;
+    font-size: 32px;
+    line-height: 1.2;
   }
 
   .gallery-subtitle {
-    font-size: 18px;
+    font-size: 16px;
+    padding: 0 20px;
   }
 
   .platform-tabs {
     flex-direction: column;
     align-items: center;
     gap: 12px;
+    margin-bottom: 40px;
   }
 
   .platform-tab {
-    width: 250px;
+    width: 280px;
     justify-content: center;
+    padding: 14px 24px;
+    font-size: 15px;
+  }
+
+  .tab-icon {
+    font-size: 18px;
   }
 
   .screenshot-card {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 30px;
     padding: 0 20px;
   }
 
-  .feature-breakdown,
-  .use-case-examples {
+  .screenshot-wrapper {
+    border-radius: 16px;
+  }
+
+  .screenshot-image {
+    border-radius: 16px;
+  }
+
+  .screenshot-overlay {
+    border-radius: 16px;
+  }
+
+  .screenshot-info h3 {
+    font-size: 24px;
+    line-height: 1.3;
+  }
+
+  .feature-description {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .feature-tags {
+    gap: 8px;
+  }
+
+  .feature-tag {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .feature-breakdown {
+    margin-top: 50px;
     padding: 0 20px;
+  }
+
+  .feature-section h3 {
+    font-size: 24px;
+    margin-bottom: 30px;
   }
 
   .feature-grid {
@@ -4898,24 +4959,190 @@ body, html {
     gap: 20px;
   }
 
+  .feature-item {
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .feature-emoji {
+    font-size: 28px;
+  }
+
+  .feature-content h4 {
+    font-size: 18px;
+  }
+
+  .feature-content p {
+    font-size: 15px;
+  }
+
+  .use-case-examples {
+    margin-top: 50px;
+    padding: 0 20px;
+  }
+
+  .use-case-examples h3 {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
   .use-case-grid {
     grid-template-columns: 1fr;
     gap: 20px;
   }
 
-  .feature-item {
-    padding: 20px;
+  .use-case-card {
+    padding: 24px 20px;
   }
 
-  .use-case-card {
-    padding: 24px;
+  .use-case-emoji {
+    font-size: 40px;
+    margin-bottom: 16px;
+  }
+
+  .use-case-card h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .use-case-card p {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 480px) {
+  .screenshot-gallery-section {
+    padding: 40px 0;
+  }
+
+  .section-header {
+    margin-bottom: 40px;
+  }
+
+  .gallery-title {
+    font-size: 28px;
+    padding: 0 20px;
+  }
+
+  .gallery-subtitle {
+    font-size: 15px;
+    padding: 0 20px;
+  }
+
+  .platform-tabs {
+    padding: 0 20px;
+    margin-bottom: 30px;
+  }
+
+  .platform-tab {
+    width: 100%;
+    max-width: 280px;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  .tab-icon {
+    font-size: 16px;
+  }
+
+  .screenshot-card {
+    gap: 24px;
+    padding: 0 16px;
+  }
+
+  .screenshot-wrapper {
+    border-radius: 12px;
+  }
+
+  .screenshot-image {
+    border-radius: 12px;
+  }
+
+  .screenshot-overlay {
+    border-radius: 12px;
+  }
+
+  .zoom-btn {
+    padding: 10px 20px;
+    font-size: 14px;
   }
 
   .screenshot-info h3 {
-    font-size: 24px;
+    font-size: 22px;
+    margin-bottom: 16px;
   }
 
   .feature-description {
-    font-size: 16px;
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+
+  .feature-tags {
+    gap: 6px;
+  }
+
+  .feature-tag {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  .feature-breakdown {
+    margin-top: 40px;
+    padding: 0 16px;
+  }
+
+  .feature-section h3 {
+    font-size: 22px;
+    margin-bottom: 24px;
+  }
+
+  .feature-item {
+    padding: 16px;
+    gap: 14px;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .feature-emoji {
+    font-size: 32px;
+    align-self: center;
+  }
+
+  .feature-content h4 {
+    font-size: 17px;
+    margin-bottom: 6px;
+  }
+
+  .feature-content p {
+    font-size: 14px;
+  }
+
+  .use-case-examples {
+    margin-top: 40px;
+    padding: 0 16px;
+  }
+
+  .use-case-examples h3 {
+    font-size: 22px;
+    margin-bottom: 24px;
+  }
+
+  .use-case-card {
+    padding: 20px 16px;
+  }
+
+  .use-case-emoji {
+    font-size: 36px;
+    margin-bottom: 14px;
+  }
+
+  .use-case-card h4 {
+    font-size: 17px;
+    margin-bottom: 8px;
+  }
+
+  .use-case-card p {
+    font-size: 14px;
   }
 }
