@@ -204,6 +204,192 @@
     </div>
   </section>
 
+  <!-- Screenshot Gallery Section -->
+  <section class="screenshot-gallery-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="gallery-title">See MappLock in Action</h2>
+        <p class="gallery-subtitle">Real screenshots showcasing every feature of MappLock on macOS and iOS</p>
+      </div>
+
+      <!-- Platform Tabs -->
+      <div class="platform-tabs">
+        <button class="platform-tab active" (click)="setActivePlatform('desktop')" [class.active]="activePlatform === 'desktop'">
+          <span class="tab-icon">💻</span>
+          macOS Desktop
+        </button>
+        <button class="platform-tab" (click)="setActivePlatform('ios')" [class.active]="activePlatform === 'ios'">
+          <span class="tab-icon">📱</span>
+          iOS & iPadOS
+        </button>
+      </div>
+
+      <!-- Desktop Screenshots -->
+      <div class="screenshots-container" *ngIf="activePlatform === 'desktop'">
+        <div class="screenshot-card">
+          <div class="screenshot-wrapper">
+            <img src="assets/screenshots/mapplock-desktop-main.png" alt="MappLock Desktop Main Interface" class="screenshot-image">
+            <div class="screenshot-overlay">
+              <button class="zoom-btn" (click)="openScreenshotModal('desktop-main')">🔍 View Full Size</button>
+            </div>
+          </div>
+          <div class="screenshot-info">
+            <h3>Beautiful Desktop Interface</h3>
+            <p class="feature-description">
+              The MappLock desktop app features a stunning landscape background with professional kiosk controls.
+              The interface shows system status, session management, and app locking capabilities all in one elegant view.
+            </p>
+            <div class="feature-tags">
+              <span class="feature-tag">🎨 Beautiful UI</span>
+              <span class="feature-tag">🔒 Session Control</span>
+              <span class="feature-tag">📊 System Status</span>
+              <span class="feature-tag">⚙️ Menu Bar Integration</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- iOS Screenshots -->
+      <div class="screenshots-container" *ngIf="activePlatform === 'ios'">
+        <div class="screenshot-card">
+          <div class="screenshot-wrapper">
+            <img src="assets/screenshots/mapplock-ios-main.png" alt="MappLock iOS Main Interface" class="screenshot-image">
+            <div class="screenshot-overlay">
+              <button class="zoom-btn" (click)="openScreenshotModal('ios-main')">🔍 View Full Size</button>
+            </div>
+          </div>
+          <div class="screenshot-info">
+            <h3>Stunning iOS App Interface</h3>
+            <p class="feature-description">
+              The iOS version showcases a modern glass morphism design with gradient backgrounds and smooth animations.
+              Select apps to allow (whitelist approach), lock down the device with beautiful visual feedback, and manage sessions with haptic feedback.
+            </p>
+            <div class="feature-tags">
+              <span class="feature-tag">🌈 Glass Morphism</span>
+              <span class="feature-tag">📱 Haptic Feedback</span>
+              <span class="feature-tag">🔄 Animated UI</span>
+              <span class="feature-tag">✅ Whitelist Mode</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detailed Feature Breakdown -->
+      <div class="feature-breakdown">
+        <div class="feature-section" *ngIf="activePlatform === 'desktop'">
+          <h3>Desktop Features Shown</h3>
+          <div class="feature-grid">
+            <div class="feature-item">
+              <span class="feature-emoji">🌄</span>
+              <div class="feature-content">
+                <h4>Dynamic Background</h4>
+                <p>Beautiful landscape wallpaper that creates a professional, calming environment for kiosk mode</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-emoji">📊</span>
+              <div class="feature-content">
+                <h4>Menu Bar Status</h4>
+                <p>Discrete menu bar integration showing lock status and system health at all times</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-emoji">🔐</span>
+              <div class="feature-content">
+                <h4>Session Management</h4>
+                <p>Start, pause, and end kiosk sessions with full control over application locking</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-emoji">⚡</span>
+              <div class="feature-content">
+                <h4>Instant Deployment</h4>
+                <p>One-click activation for classroom tests, trade shows, or public displays</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-section" *ngIf="activePlatform === 'ios'">
+          <h3>iOS Features Shown</h3>
+          <div class="feature-grid">
+            <div class="feature-item">
+              <span class="feature-emoji">📱</span>
+              <div class="feature-content">
+                <h4>App Selection Interface</h4>
+                <p>Choose which apps to allow with intuitive card-based selection and real app icons</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-emoji">🔒</span>
+              <div class="feature-content">
+                <h4>Lock All Apps Button</h4>
+                <p>Beautiful gradient button to activate kiosk mode and lock down the device</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-emoji">✅</span>
+              <div class="feature-content">
+                <h4>Session Status</h4>
+                <p>"Ready to Lock Apps" status indicator shows the system is ready for activation</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-emoji">🎨</span>
+              <div class="feature-content">
+                <h4>Glass Morphism Design</h4>
+                <p>Modern iOS design with translucent cards, smooth animations, and premium feel</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-emoji">🔄</span>
+              <div class="feature-content">
+                <h4>Whitelist Logic</h4>
+                <p>Select apps you want to allow (not block) - more intuitive than traditional blacklist approach</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-emoji">⚙️</span>
+              <div class="feature-content">
+                <h4>Custom Controls</h4>
+                <p>Quick mode toggles, custom settings, and Allow/Block/Custom action buttons</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Use Case Examples -->
+      <div class="use-case-examples">
+        <h3>Perfect For These Scenarios</h3>
+        <div class="use-case-grid">
+          <div class="use-case-card">
+            <span class="use-case-emoji">🏫</span>
+            <h4>Classroom Testing</h4>
+            <p>Lock students into exam software while preventing access to browsers, messaging, or other distracting applications</p>
+          </div>
+          <div class="use-case-card">
+            <span class="use-case-emoji">🏢</span>
+            <h4>Trade Show Demos</h4>
+            <p>Keep booth demonstrations focused on your product presentation without visitors accidentally exiting</p>
+          </div>
+          <div class="use-case-card">
+            <span class="use-case-emoji">🏛️</span>
+            <div class="use-case-content">
+              <h4>Museum Exhibits</h4>
+              <p>Create interactive displays that visitors can explore without accessing system settings or other apps</p>
+            </div>
+          </div>
+          <div class="use-case-card">
+            <span class="use-case-emoji">🏪</span>
+            <h4>Retail Kiosks</h4>
+            <p>Secure point-of-sale systems and customer self-service stations from tampering or unauthorized access</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Advanced Editor Section - EXACT Sensei Style -->
   <section class="advanced-editor-section">
     <!-- Gradient Mesh Background -->

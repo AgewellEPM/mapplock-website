@@ -21,9 +21,17 @@ export class InteractiveDemoComponent implements OnInit, OnDestroy {
   private swipeThreshold = 50;
   private tapThreshold = 200;
   private lastTap = 0;
+  private longPressTimer: any = null;
+  private longPressThreshold = 500;
+  private isLongPress = false;
   isMobile = false;
   isAndroid = false;
   isIOS = false;
+
+  // Enhanced mobile features
+  private hapticSupported = false;
+  private wakeLockSupported = false;
+  private wakeLock: any = null;
 
   // Performance optimization
   private animationFrame: number | null = null;
@@ -197,31 +205,71 @@ export class InteractiveDemoComponent implements OnInit, OnDestroy {
 
   detectMobile() {
     const userAgent = navigator.userAgent || navigator.vendor;
-    this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+    this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent) ||
+                   ('ontouchstart' in window) ||
+                   (navigator.maxTouchPoints > 0);
     this.isAndroid = /Android/i.test(userAgent);
     this.isIOS = /iPhone|iPad|iPod/i.test(userAgent);
+
+    // Check for enhanced mobile features
+    this.hapticSupported = 'vibrate' in navigator;
+    this.wakeLockSupported = 'wakeLock' in navigator;
 
     // Add mobile class to body for CSS targeting
     if (this.isMobile) {
       document.body.classList.add('mobile-device');
       if (this.isIOS) document.body.classList.add('ios-device');
       if (this.isAndroid) document.body.classList.add('android-device');
+
+      // Enable better mobile scrolling
+      (document.body.style as any).webkitOverflowScrolling = 'touch';
+      document.body.style.overscrollBehavior = 'none';
     }
   }
 
   setupTouchHandlers() {
     if (!this.isMobile) return;
 
-    // Prevent zoom on double tap
+    // Enhanced touch handling
     document.addEventListener('touchstart', (e) => {
+      // Prevent zoom on multi-touch
       if (e.touches.length > 1) {
+        e.preventDefault();
+      }
+
+      // Prevent pull-to-refresh on iOS
+      if (this.isIOS && window.scrollY === 0) {
         e.preventDefault();
       }
     }, { passive: false });
 
+    // Prevent pinch-to-zoom gestures
     document.addEventListener('gesturestart', (e) => {
       e.preventDefault();
     }, { passive: false });
+
+    // Prevent context menu on long press
+    document.addEventListener('contextmenu', (e) => {
+      if (this.isDemoOpen) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    // Handle orientation changes
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => {
+        this.handleResize();
+      }, 100);
+    });
+
+    // Prevent bounce scrolling on iOS
+    if (this.isIOS) {
+      document.addEventListener('touchmove', (e) => {
+        if (this.isDemoOpen) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+    }
   }
 
   setupResizeHandler() {
@@ -307,9 +355,10 @@ export class InteractiveDemoComponent implements OnInit, OnDestroy {
   openDemo() {
     this.isDemoOpen = true;
 
-    // Mobile-specific message
+    // Mobile-specific message with enhanced feedback
     if (this.isMobile) {
-      this.lockMessage = '📱 Tap the Lock button to secure this browser!';
+      this.lockMessage = '📱 Touch the lock button or double-tap to secure!';
+      this.provideMobileHapticFeedback('open');
     } else {
       this.lockMessage = '✨ Try pressing ⌘L to lock this browser!';
     }
@@ -327,6 +376,7 @@ export class InteractiveDemoComponent implements OnInit, OnDestroy {
       // Set mobile-specific styles
       if (this.isMobile) {
         (popup as HTMLElement).style.height = window.innerHeight + 'px';
+        this.requestWakeLock();
       }
     }
 
@@ -343,6 +393,9 @@ export class InteractiveDemoComponent implements OnInit, OnDestroy {
     // Prevent body scroll on mobile
     if (this.isMobile) {
       document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.height = '100%';
     }
   }
 
@@ -417,6 +470,10 @@ export class InteractiveDemoComponent implements OnInit, OnDestroy {
     // Restore body scroll on mobile
     if (this.isMobile) {
       document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+      this.releaseWakeLock();
     }
 
     // Clean up particles
@@ -674,7 +731,9 @@ export class InteractiveDemoComponent implements OnInit, OnDestroy {
     this.isLocked = true;
 
     if (this.isMobile) {
-      this.lockMessage = '🔒 Browser locked! Tap unlock button or swipe up from bottom.';
+      this.lockMessage = '🔒 Locked! Double-tap or use unlock button to exit.';
+      this.provideMobileHapticFeedback('lock');
+      this.addMobileLockEffects();
     } else {
       this.lockMessage = '🔒 Browser is now locked in kiosk mode!';
     }
@@ -682,13 +741,11 @@ export class InteractiveDemoComponent implements OnInit, OnDestroy {
     // Simulate lock effects
     this.disableInteractions();
 
-    // Play lock sound effect (optional)
+    // Play lock sound effect
     this.playLockSound();
 
-    // Add haptic feedback on mobile
-    if (this.isMobile && 'vibrate' in navigator) {
-      navigator.vibrate([100, 50, 100]);
-    }
+    // Add visual feedback
+    this.addLockVisualEffects();
   }
 
   disableInteractions() {
@@ -737,18 +794,62 @@ export class InteractiveDemoComponent implements OnInit, OnDestroy {
     this.wrongPinAttempts = 0;
     this.lockMessage = '✅ Browser unlocked successfully!';
 
-    // Add haptic feedback on mobile
-    if (this.isMobile && 'vibrate' in navigator) {
-      navigator.vibrate(200);
+    // Enhanced mobile feedback
+    if (this.isMobile) {
+      this.provideMobileHapticFeedback('unlock');
+      this.addUnlockEffects();
+    }
+
+    // Remove lock visual effects
+    const urlBar = document.querySelector('.url-bar');
+    if (urlBar) {
+      urlBar.classList.remove('locked');
     }
 
     setTimeout(() => {
       if (this.isMobile) {
-        this.lockMessage = '✨ Tap Lock button to try again';
+        this.lockMessage = '✨ Ready to lock again - tap the lock button!';
       } else {
         this.lockMessage = '✨ Try locking again with ⌘L';
       }
     }, 2000);
+  }
+
+  private addUnlockEffects() {
+    // Add success flash effect
+    const flash = document.createElement('div');
+    flash.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(34, 197, 94, 0.2);
+      z-index: 10001;
+      pointer-events: none;
+      animation: successFlash 0.6s ease-out;
+    `;
+
+    document.body.appendChild(flash);
+    setTimeout(() => {
+      if (flash.parentNode) {
+        flash.parentNode.removeChild(flash);
+      }
+    }, 600);
+
+    // Add success animation CSS
+    if (!document.querySelector('#success-effects')) {
+      const style = document.createElement('style');
+      style.id = 'success-effects';
+      style.textContent = `
+        @keyframes successFlash {
+          0% { opacity: 0; }
+          30% { opacity: 1; }
+          100% { opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
   }
 
   cancelUnlock() {
@@ -777,10 +878,29 @@ export class InteractiveDemoComponent implements OnInit, OnDestroy {
     this.touchStartX = touch.clientX;
     this.touchStartY = touch.clientY;
     this.touchStartTime = Date.now();
+    this.isLongPress = false;
+
+    // Start long press timer
+    this.longPressTimer = setTimeout(() => {
+      this.isLongPress = true;
+      this.handleLongPress(event);
+    }, this.longPressThreshold);
   }
 
   onTouchEnd(event: TouchEvent) {
     if (!this.isMobile) return;
+
+    // Clear long press timer
+    if (this.longPressTimer) {
+      clearTimeout(this.longPressTimer);
+      this.longPressTimer = null;
+    }
+
+    // Don't handle other gestures if it was a long press
+    if (this.isLongPress) {
+      this.isLongPress = false;
+      return;
+    }
 
     const touch = event.changedTouches[0];
     const deltaX = touch.clientX - this.touchStartX;
@@ -843,10 +963,121 @@ export class InteractiveDemoComponent implements OnInit, OnDestroy {
   mobileLockToggle() {
     if (!this.isMobile) return;
 
+    // Provide immediate haptic feedback
+    this.provideMobileHapticFeedback('tap');
+
     if (this.isLocked) {
       this.showUnlockPrompt = true;
     } else {
       this.lockBrowser();
+    }
+  }
+
+  // Enhanced mobile feedback methods
+  private provideMobileHapticFeedback(type: 'tap' | 'lock' | 'unlock' | 'open' | 'error') {
+    if (!this.hapticSupported) return;
+
+    const patterns = {
+      tap: [10],
+      lock: [100, 50, 100],
+      unlock: [50, 50, 200],
+      open: [80, 40, 80, 40, 120],
+      error: [200, 100, 200]
+    };
+
+    try {
+      navigator.vibrate(patterns[type]);
+    } catch (e) {
+      // Vibration not supported or failed
+    }
+  }
+
+  private addMobileLockEffects() {
+    // Add screen flash effect
+    const flash = document.createElement('div');
+    flash.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 71, 87, 0.3);
+      z-index: 10001;
+      pointer-events: none;
+      animation: flashEffect 0.5s ease-out;
+    `;
+
+    document.body.appendChild(flash);
+    setTimeout(() => {
+      if (flash.parentNode) {
+        flash.parentNode.removeChild(flash);
+      }
+    }, 500);
+
+    // Add CSS animation
+    if (!document.querySelector('#mobile-lock-effects')) {
+      const style = document.createElement('style');
+      style.id = 'mobile-lock-effects';
+      style.textContent = `
+        @keyframes flashEffect {
+          0% { opacity: 0; }
+          50% { opacity: 1; }
+          100% { opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
+  private addLockVisualEffects() {
+    // Animate lock status icon
+    const lockStatus = document.querySelector('.lock-status');
+    if (lockStatus) {
+      lockStatus.classList.add('animated', 'locked');
+      setTimeout(() => {
+        lockStatus.classList.remove('animated');
+      }, 500);
+    }
+
+    // Animate URL bar
+    const urlBar = document.querySelector('.url-bar');
+    if (urlBar) {
+      urlBar.classList.add('locked');
+    }
+  }
+
+  private async requestWakeLock() {
+    if (!this.wakeLockSupported) return;
+
+    try {
+      this.wakeLock = await (navigator as any).wakeLock.request('screen');
+      console.log('Wake lock acquired');
+    } catch (err) {
+      console.log('Wake lock failed:', err);
+    }
+  }
+
+  private releaseWakeLock() {
+    if (this.wakeLock) {
+      this.wakeLock.release();
+      this.wakeLock = null;
+      console.log('Wake lock released');
+    }
+  }
+
+  private handleLongPress(event: TouchEvent) {
+    if (!this.isDemoOpen) return;
+
+    // Long press shows help or context menu
+    this.provideMobileHapticFeedback('tap');
+
+    // Show mobile instructions
+    const instructions = document.querySelector('.mobile-instructions');
+    if (instructions) {
+      instructions.classList.add('highlight');
+      setTimeout(() => {
+        instructions.classList.remove('highlight');
+      }, 2000);
     }
   }
 

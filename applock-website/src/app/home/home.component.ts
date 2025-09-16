@@ -24,6 +24,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   showCheckoutModal = false;
   selectedPlanForCheckout = '';
 
+  activePlatform = 'desktop';
+
   floatingCards = [
     { icon: 'icon-lock', text: 'Secure', delay: '0s' },
     { icon: 'icon-focus', text: 'Focused', delay: '2s' },
@@ -520,6 +522,22 @@ This popup blocking is exactly what MappLock prevents in kiosk environments!`);
       popup.document.close();
     } else {
       alert('Please allow popups to view the iOS demo. The iOS app source code is available at: https://github.com/AgewellEPM/MappLock-iOS');
+    }
+  }
+
+  setActivePlatform(platform: string) {
+    this.activePlatform = platform;
+  }
+
+  openScreenshotModal(screenshotId: string) {
+    const screenshots = {
+      'desktop-main': 'assets/screenshots/mapplock-desktop-main.png',
+      'ios-main': 'assets/screenshots/mapplock-ios-main.png'
+    };
+
+    const screenshotUrl = screenshots[screenshotId as keyof typeof screenshots];
+    if (screenshotUrl) {
+      window.open(screenshotUrl, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
     }
   }
 }
