@@ -19,6 +19,15 @@ html, body {
   overflow-x: hidden;
   min-height: 100vh;
   line-height: 1.5;
+  position: relative;
+  width: 100%;
+}
+
+/* Fix mobile scrolling */
+body {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
 }
 
 /* Mobile-First Responsive Design */
@@ -27,6 +36,36 @@ html, body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
+}
+
+/* Mobile Scroll Fix - Ensure proper scrolling */
+@media (max-width: 768px) {
+  html {
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    height: 100%;
+  }
+
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    height: auto;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Prevent horizontal scroll */
+  * {
+    max-width: 100vw;
+  }
+
+  /* Fix for fixed elements causing scroll issues */
+  .fixed, [class*="fixed-"] {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
 }
 
 /* Global Page Header Spacing - Consistent Top Padding */
